@@ -1,0 +1,63 @@
+---
+const contactBg = "https://www.figma.com/api/mcp/asset/69ae6668-419c-4fee-9ea9-56046ec40d15";
+const sideBg1 = "https://www.figma.com/api/mcp/asset/6d6364e0-46aa-436a-a6a4-f48255cd38ce";
+const sideBg2 = "https://www.figma.com/api/mcp/asset/0953035a-30fa-41c3-9f2b-48f4f1d5de79";
+const designIcon = "https://www.figma.com/api/mcp/asset/688b1a8a-13c9-4d0d-9903-e61542df01a7";
+const vrIcon = "https://www.figma.com/api/mcp/asset/4c2068c5-1a04-4bf6-8835-b4ddce00cc6d";
+const compareIcon = "https://www.figma.com/api/mcp/asset/ae6f751d-90b4-4c99-938d-b91cda3b3efc";
+const zaloIcon = "https://www.figma.com/api/mcp/asset/da6b2575-e2b8-440a-ab1c-3a62bde7feef";
+---
+
+<section class="relative overflow-visible py-20">
+  <div class="container-home relative">
+    <div class="relative h-[487px] overflow-hidden">
+      <img src={contactBg} alt="" class="absolute inset-0 h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-brand-950/75"></div>
+      <img src={sideBg1} alt="" class="absolute -left-[349px] top-0 h-[384px] w-[639px] object-cover" />
+      <img src={sideBg2} alt="" class="absolute -right-[350px] top-0 h-[425px] w-[708px] object-cover" />
+
+      <div class="absolute left-[72px] top-10 max-w-[581px] text-white">
+        <div class="inline-flex rounded-full bg-white/20 px-6 py-2 text-[16px] font-bold uppercase backdrop-blur-[4px]">Perfect service</div>
+        <div class="mt-10">
+          <p class="text-[32px] font-semibold uppercase leading-[1.5]">Hay lien he voi chung toi</p>
+          <p class="text-[32px] font-semibold uppercase leading-[1.5]">Chung toi o day de lang nghe</p>
+          <p class="mt-3 max-w-[517px] text-[16px] leading-7">De lai thong tin de nhan tu van chuyen sau va bao gia so bo cho cong trinh cua ban.</p>
+        </div>
+      </div>
+
+      <form class="absolute right-0 top-10 w-[461px] bg-white p-6 shadow-[3px_3px_5px_rgba(0,0,0,0.12)]">
+        <div class="space-y-4">
+          <div class="border-b border-[#9f9f9f] px-4 py-3 text-[16px] text-[#979797]">Ho va ten <span class="text-[#d13c3c]">*</span></div>
+          <div class="border-b border-[#9f9f9f] px-4 py-3 text-[16px] text-[#979797]">So dien thoai <span class="text-[#d13c3c]">*</span></div>
+          <div class="border-b border-[#9f9f9f] px-4 py-3 text-[16px] text-[#979797]">Email <span class="text-[#d13c3c]">*</span></div>
+          <div class="flex items-center justify-between border-b border-[#9f9f9f] px-4 py-3 text-[16px] text-[#979797]">Dich vu <span>▾</span></div>
+          <div class="h-[102px] border-b border-[#9f9f9f] px-4 py-3 text-[16px] text-[#979797]">Noi dung</div>
+        </div>
+        <button type="button" class="mt-4 bg-accent-500 px-4 py-3 text-[16px] font-bold text-white">Gui thong tin</button>
+      </form>
+    </div>
+
+    <div class="absolute right-0 top-[118px] hidden w-[64px] flex-col gap-[10px] xl:flex">
+      <div class="relative h-[64px] rounded-[58px] border-[1.5px] border-white shadow-[0px_0px_5px_0px_rgba(255,255,255,0.3)]">
+        <div class="absolute inset-0 rounded-[58px] bg-[linear-gradient(270deg,rgba(255,255,255,0.8)_0%,rgba(152,152,152,0.8)_26.361%,rgba(242,242,242,0.8)_51.664%,rgba(221,221,221,0.8)_70.963%,rgba(135,135,135,0.8)_100%)] backdrop-blur-[3.5px]"></div>
+        <img src={designIcon} alt="" class="absolute left-1/2 top-[8px] h-6 w-6 -translate-x-1/2" />
+        <p class="absolute left-[12px] top-[42px] text-[8px] text-text-700">Tu thiet ke</p>
+      </div>
+      <div class="relative h-[64px] rounded-[58px] border-[1.5px] border-white shadow-[0px_0px_5px_0px_rgba(255,255,255,0.3)]">
+        <div class="absolute inset-0 rounded-[58px] bg-[linear-gradient(270deg,rgba(255,255,255,0.8)_0%,rgba(152,152,152,0.8)_26.361%,rgba(242,242,242,0.8)_51.664%,rgba(221,221,221,0.8)_70.963%,rgba(135,135,135,0.8)_100%)] backdrop-blur-[3.5px]"></div>
+        <img src={vrIcon} alt="" class="absolute left-1/2 top-[8px] h-6 w-6 -translate-x-1/2" />
+        <p class="absolute left-[16px] top-[42px] text-[8px] text-text-700">3D VR360</p>
+      </div>
+      <div class="relative h-[64px] rounded-[58px] border-[1.5px] border-white shadow-[0px_0px_5px_0px_rgba(255,255,255,0.3)]">
+        <div class="absolute inset-0 rounded-[58px] bg-[linear-gradient(270deg,rgba(255,255,255,0.8)_0%,rgba(152,152,152,0.8)_26.361%,rgba(242,242,242,0.8)_51.664%,rgba(221,221,221,0.8)_70.963%,rgba(135,135,135,0.8)_100%)] backdrop-blur-[3.5px]"></div>
+        <img src={compareIcon} alt="" class="absolute left-1/2 top-[8px] h-6 w-6 -translate-x-1/2" />
+        <p class="absolute left-[16px] top-[42px] text-[8px] text-text-700">So sanh</p>
+      </div>
+      <div class="relative h-[64px] rounded-[58px] border-[1.5px] border-white shadow-[0px_0px_5px_0px_rgba(255,255,255,0.3)]">
+        <div class="absolute inset-0 rounded-[58px] bg-[linear-gradient(270deg,rgba(255,255,255,0.8)_0%,rgba(152,152,152,0.8)_26.361%,rgba(242,242,242,0.8)_51.664%,rgba(221,221,221,0.8)_70.963%,rgba(135,135,135,0.8)_100%)] backdrop-blur-[3.5px]"></div>
+        <img src={zaloIcon} alt="" class="absolute left-1/2 top-3 h-6 w-6 -translate-x-1/2" />
+        <p class="absolute left-[10px] top-[42px] text-[8px] text-text-700">Lien he Zalo</p>
+      </div>
+    </div>
+  </div>
+</section>

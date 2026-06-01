@@ -1,0 +1,23 @@
+---
+const heroBg = "https://www.figma.com/api/mcp/asset/1fef78e1-c766-4cd3-8f2e-28969deaf58d";
+const homeIcon = "https://www.figma.com/api/mcp/asset/00aa882b-1bf7-4320-baf2-7ffd58db148a";
+const arrowRight = "https://www.figma.com/api/mcp/asset/b0fcb1ae-aa26-4196-90a9-03ca330c0938";
+---
+
+<section class="relative overflow-hidden">
+  <div class="relative h-[248px] w-full overflow-hidden">
+    <img src={heroBg} alt="" class="absolute inset-0 h-full w-full object-cover opacity-20" />
+    <div class="absolute inset-0 bg-[#202c33]"></div>
+
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="flex flex-col items-center gap-8 text-center">
+        <h1 class="text-[48px] font-bold uppercase text-accent-500">Gioi thieu ve Luxiarc</h1>
+        <div class="flex items-center gap-1 text-white">
+          <img src={homeIcon} alt="" class="h-4 w-4" />
+          <img src={arrowRight} alt="" class="h-4 w-4" />
+          <span class="text-[16px]">Ve chung toi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

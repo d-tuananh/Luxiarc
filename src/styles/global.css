@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-950: #101d25;
+  --color-brand-900: #132029;
+  --color-brand-700: #213a4a;
+  --color-accent-500: #cab771;
+  --color-surface-50: #f8fafc;
+  --color-surface-100: #f2f4f5;
+  --color-surface-200: #e5e7eb;
+  --color-text-900: #132029;
+  --color-text-700: #3f3f3f;
+  --color-text-500: #7b7b7b;
+
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1344px;
+}
+
+@utility container-home {
+  margin-inline: auto;
+  max-width: 1312px;
+  padding-inline: 1rem;
+}

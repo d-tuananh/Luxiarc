@@ -1,0 +1,62 @@
+---
+import bannerBg from "@/assets/background.svg";
+---
+
+<section class="relative overflow-hidden">
+  <swiper-container
+    class="block [--swiper-theme-color:#facc15] [--swiper-pagination-bullet-inactive-color:#f8fafc] [--swiper-pagination-bullet-inactive-opacity:0.45] [--swiper-pagination-bottom:190px] min-[840px]:[--swiper-pagination-bottom:75px]"
+    slides-per-view="1"
+    loop="true"
+    autoplay="true"
+    autoplay-delay="4500"
+    speed="900"
+    pagination="true"
+  >
+    <swiper-slide>
+      <article class="h-[clamp(340px,58vw,560px)] bg-cover bg-center flex items-end" style={`background-image: linear-gradient(rgba(9, 13, 20, 0.35), rgba(9, 13, 20, 0.35)), url(${bannerBg.src});`}>
+        <div class="text-slate-50 p-8 max-w-170">
+          <p class="tracking-[0.22em] text-[0.72rem] uppercase opacity-90 mb-[0.7rem]">LUXIARC INTERIOR</p>
+          <h1 class="m-0 text-[clamp(1.4rem,3vw,2.4rem)] leading-[1.2] font-bold">Khong gian toi gian, chat lieu kien truc ben vung</h1>
+        </div>
+      </article>
+    </swiper-slide>
+    <swiper-slide>
+      <article class="h-[clamp(340px,58vw,560px)] bg-cover bg-center flex items-end" style={`background-image: linear-gradient(rgba(9, 13, 20, 0.45), rgba(9, 13, 20, 0.45)), url(${bannerBg.src});`}>
+        <div class="text-slate-50 p-8 max-w-170">
+          <p class="tracking-[0.22em] text-[0.72rem] uppercase opacity-90 mb-[0.7rem]">THI CONG TRON GOI</p>
+          <h1 class="m-0 text-[clamp(1.4rem,3vw,2.4rem)] leading-[1.2] font-bold">Dong bo thiet ke va thi cong cho nha pho va can ho</h1>
+        </div>
+      </article>
+    </swiper-slide>
+  </swiper-container>
+
+  <div class="absolute left-0 right-0 bottom-0 grid grid-cols-1 gap-0 bg-[#0e1824]/80 backdrop-blur-[6px] text-slate-50 border-t border-white/14 min-[840px]:grid-cols-3">
+    <div class="flex items-center gap-3 py-[0.9rem] px-4 border-t border-white/8 min-[840px]:border-t-0 min-[840px]:border-r min-[840px]:border-white/10 min-[840px]:py-[0.95rem] min-[840px]:px-[1.1rem] last:border-r-0">
+      <span class="border border-yellow-400/60 text-yellow-400 w-[1.9rem] h-[1.9rem] rounded-full grid place-items-center shrink-0">◔</span>
+      <div>
+        <h3 class="text-[0.9rem] uppercase m-0 font-semibold">Tu van mien phi</h3>
+        <p class="text-[0.74rem] opacity-82 mt-[0.2rem] mb-0">Goi ngay de duoc ho tro nhanh</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3 py-[0.9rem] px-4 border-t border-white/8 min-[840px]:border-t-0 min-[840px]:border-r min-[840px]:border-white/10 min-[840px]:py-[0.95rem] min-[840px]:px-[1.1rem] last:border-r-0">
+      <span class="border border-yellow-400/60 text-yellow-400 w-[1.9rem] h-[1.9rem] rounded-full grid place-items-center shrink-0">◎</span>
+      <div>
+        <h3 class="text-[0.9rem] uppercase m-0 font-semibold">Doi tra de dang</h3>
+        <p class="text-[0.74rem] opacity-82 mt-[0.2rem] mb-0">Chinh sach linh hoat cho tung du an</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3 py-[0.9rem] px-4 border-t border-white/8 min-[840px]:border-t-0 min-[840px]:border-r min-[840px]:border-white/10 min-[840px]:py-[0.95rem] min-[840px]:px-[1.1rem] last:border-r-0">
+      <span class="border border-yellow-400/60 text-yellow-400 w-[1.9rem] h-[1.9rem] rounded-full grid place-items-center shrink-0">↗</span>
+      <div>
+        <h3 class="text-[0.9rem] uppercase m-0 font-semibold">Bao hanh tai nha</h3>
+        <p class="text-[0.74rem] opacity-82 mt-[0.2rem] mb-0">Xu ly ky thuat trong 24h tai noi thanh</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { register } from "swiper/element/bundle";
+
+  register();
+</script>

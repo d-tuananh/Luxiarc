@@ -1,0 +1,30 @@
+﻿---
+import introBg from "@/assets/background.svg";
+import introSketch1 from "@/assets/astro.svg";
+import introSketch2 from "@/assets/background.svg";
+---
+
+<section class="container-home grid gap-6 py-20 lg:grid-cols-[1.2fr_.8fr]">
+  <div class="relative min-h-96 overflow-hidden">
+    <img src={introBg.src} alt="" class="absolute inset-0 h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-brand-950/75"></div>
+    <div class="absolute left-10 top-10 max-w-120 text-white">
+      <p class="inline-flex rounded-full bg-white/20 px-6 py-2 text-[12px] tracking-[0.14em]">HAY LIEN HE VOI CHUNG TOI</p>
+      <h2 class="mt-6 text-[30px] font-semibold uppercase">Chung toi o day de lang nghe</h2>
+      <p class="mt-3 leading-7">Chung toi luon san sang ho tro tu tu van, thiet ke den thi cong va bao hanh.</p>
+    </div>
+  </div>
+
+  <form class="grid gap-3 border border-surface-200 bg-white p-6">
+    <input class="border border-surface-200 px-3 py-3 outline-none" type="text" placeholder="Ho va ten *" />
+    <input class="border border-surface-200 px-3 py-3 outline-none" type="email" placeholder="Email *" />
+    <input class="border border-surface-200 px-3 py-3 outline-none" type="text" placeholder="So dien thoai *" />
+    <select class="border border-surface-200 px-3 py-3 outline-none">
+      <option>Dich vu</option>
+      <option>Thiet ke</option>
+      <option>Thi cong</option>
+    </select>
+    <textarea class="min-h-32 border border-surface-200 px-3 py-3 outline-none" rows="4" placeholder="Noi dung"></textarea>
+    <button type="button" class="bg-accent-500 px-4 py-3 text-sm font-semibold text-white">Gui dang ky</button>
+  </form>
+</section>

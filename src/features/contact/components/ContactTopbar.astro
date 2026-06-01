@@ -1,0 +1,27 @@
+---
+const logoMark = "https://www.figma.com/api/mcp/asset/8e2280ff-7673-4660-922f-6705c4e5a783";
+const phoneIcon = "https://www.figma.com/api/mcp/asset/999137db-e183-4918-ba68-fd8f170cbc9a";
+---
+
+<header class="bg-brand-900 text-white">
+  <div class="container-home flex h-[71px] items-center justify-between gap-6">
+    <div class="flex items-center gap-3 font-bold tracking-[0.03em]">
+      <img src={logoMark} alt="LuxiArc" class="h-[52px] w-[52px] object-contain" />
+      <span class="text-[14px] uppercase sm:text-[16px]">Cong ty LuxiArc</span>
+    </div>
+
+    <nav class="hidden items-center gap-7 text-[14px] font-medium lg:flex">
+      <a href="/">Gioi thieu</a>
+      <a href="/about">Tu Van & Phap Ly</a>
+      <a href="/client-api">Thiet Ke & Thi Cong</a>
+      <a href="/contact">Ky Thuat & Vat Tu</a>
+      <a href="/contact">Hau Mai</a>
+      <a href="/contact" class="border-b border-current pb-1" aria-current="page">Lien he</a>
+    </nav>
+
+    <a href="tel:0989846666" class="inline-flex items-center gap-2 bg-accent-500 px-4 py-3 text-sm font-bold text-white">
+      <img src={phoneIcon} alt="" class="h-4 w-4" />
+      <span>0989.84.6666</span>
+    </a>
+  </div>
+</header>
