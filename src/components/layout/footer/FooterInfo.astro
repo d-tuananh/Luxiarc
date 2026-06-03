@@ -1,0 +1,64 @@
+---
+import Facebook from "@/components/svgs/facebook.astro"
+import Youtube from "@/components/svgs/youtube.astro"
+
+// FooterInfo.astro
+---
+
+<div class="col-span-2">
+  <div class="flex items-center gap-3.5 mb-6">
+    <span class="h-13 shrink-0 img__contain block img__h-full">
+      <img src="/src/styles/images/logo.png" alt="LuxiArc Logo" />
+    </span>
+    <span
+      class="bg-[linear-gradient(180deg,#DFC976_0%,#A37A48_19.71%,#DFC976_46.15%,#A37A48_76.92%,#DFC976_100%)] text-transparent bg-clip-text text-[1.5rem] font-bold uppercase"
+    >
+      CÔNG TY LUXIARC
+    </span>
+  </div>
+
+  <div class="text-white space-y-3 mb-6">
+    <p>
+      Hotline:
+      <a
+        href="tel:+8412346789"
+        class="text-white font-semibold ml-1 hover:text-secondary"
+      >
+        012346789
+      </a>
+    </p>
+    <p>
+      Email:
+      <a
+        href="mailto:luxiarc@gmail.com"
+        class="text-white font-semibold ml-1 hover:text-secondary"
+      >
+        luxiarc@gmail.com
+      </a>
+    </p>
+    <p>
+      Địa chỉ:
+      <strong class="text-white font-semibold ml-1 hover:text-secondary"
+        >Số 183 Cầu Giấy - Thanh Xuân - Hà Nội</strong
+      >
+    </p>
+  </div>
+
+  <!-- Social Media Buttons -->
+  <div class="flex items-center gap-3">
+    <a
+      href="#"
+      class="size-7 text-white hover:text-secondary"
+      aria-label="Facebook"
+    >
+      <Facebook />
+    </a>
+    <a
+      href="#"
+      class="size-7 text-white hover:text-secondary"
+      aria-label="YouTube"
+    >
+      <Youtube />
+    </a>
+  </div>
+</div>

@@ -1,37 +1,40 @@
-import { A as AstroError, I as InvalidComponentArgs } from './prerender_DdeB0Q8u.mjs';
+import {
+  A as AstroError,
+  I as InvalidComponentArgs,
+} from "./prerender_DdeB0Q8u.mjs"
 
 function validateArgs(args) {
-  if (args.length !== 3) return false;
-  if (!args[0] || typeof args[0] !== "object") return false;
-  return true;
+  if (args.length !== 3) return false
+  if (!args[0] || typeof args[0] !== "object") return false
+  return true
 }
 function baseCreateComponent(cb, moduleId, propagation) {
-  const name = moduleId?.split("/").pop()?.replace(".astro", "") ?? "";
+  const name = moduleId?.split("/").pop()?.replace(".astro", "") ?? ""
   const fn = (...args) => {
     if (!validateArgs(args)) {
       throw new AstroError({
         ...InvalidComponentArgs,
-        message: InvalidComponentArgs.message(name)
-      });
+        message: InvalidComponentArgs.message(name),
+      })
     }
-    return cb(...args);
-  };
-  Object.defineProperty(fn, "name", { value: name, writable: false });
-  fn.isAstroComponentFactory = true;
-  fn.moduleId = moduleId;
-  fn.propagation = propagation;
-  return fn;
+    return cb(...args)
+  }
+  Object.defineProperty(fn, "name", { value: name, writable: false })
+  fn.isAstroComponentFactory = true
+  fn.moduleId = moduleId
+  fn.propagation = propagation
+  return fn
 }
 function createComponentWithOptions(opts) {
-  const cb = baseCreateComponent(opts.factory, opts.moduleId, opts.propagation);
-  return cb;
+  const cb = baseCreateComponent(opts.factory, opts.moduleId, opts.propagation)
+  return cb
 }
 function createComponent(arg1, moduleId, propagation) {
   if (typeof arg1 === "function") {
-    return baseCreateComponent(arg1, moduleId, propagation);
+    return baseCreateComponent(arg1, moduleId, propagation)
   } else {
-    return createComponentWithOptions(arg1);
+    return createComponentWithOptions(arg1)
   }
 }
 
-export { createComponent as c };
+export { createComponent as c }

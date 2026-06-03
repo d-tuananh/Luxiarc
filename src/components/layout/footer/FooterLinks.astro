@@ -1,0 +1,26 @@
+---
+// FooterLinks.astro
+interface Props {
+  title?: string
+  links: string[]
+}
+
+const { title = "LIÊN KẾT", links } = Astro.props
+---
+
+<div class="text-white">
+  <p class="font-semibold text-[1.25rem] uppercase mb-4">
+    {title}
+  </p>
+  <ul class="space-y-3">
+    {
+      links.map((link) => (
+        <li>
+          <a href="#" class="block hover:text-secondary">
+            {link}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

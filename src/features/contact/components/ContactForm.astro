@@ -1,0 +1,105 @@
+---
+
+---
+
+<form
+  id="contact-form"
+  class="bg-white w-full space-y-3.5 p-6 shadow-[3px_3px_10px_0_rgba(0,0,0,0.12)]"
+>
+  <!-- Họ và tên -->
+  <input
+    type="text"
+    id="fullname"
+    name="fullname"
+    required
+    placeholder="Họ và tên *"
+    class="block w-full py-2 border-b border-[#9F9F9F]"
+  />
+
+  <!-- Số điện thoại -->
+  <input
+    type="tel"
+    id="phone"
+    name="phone"
+    required
+    placeholder="Số điện thoại *"
+    class="block w-full py-2 border-b border-[#9F9F9F]"
+  />
+
+  <!-- Email -->
+  <input
+    type="email"
+    id="email"
+    name="email"
+    required
+    placeholder="Email *"
+    class="block w-full py-2 border-b border-[#9F9F9F]"
+  />
+
+  <!-- Dịch vụ -->
+  <select
+    id="service"
+    name="service"
+    class="block w-full py-2 border-b border-[#9F9F9F]"
+  >
+    <option value="" disabled selected>Dịch vụ</option>
+    <option value="thiet-ke">Thiết kế nội thất</option>
+    <option value="thi-cong">Thi công trọn gói</option>
+    <option value="tu-van">Tư vấn pháp lý & xây dựng</option>
+  </select>
+
+  <!-- Nội dung -->
+  <textarea
+    id="message"
+    name="message"
+    rows="3"
+    placeholder="Nội dung"
+    class="block w-full py-2 border-b border-[#9F9F9F] resize-none"></textarea>
+
+  <!-- Nút submit -->
+  <button type="submit" class="btn"> Gửi thông tin </button>
+</form>
+
+<script>
+  // Chạy code script ở client-side để xử lý validate
+  const form = document.getElementById("contact-form") as HTMLFormElement
+  const phoneInput = document.getElementById("phone") as HTMLInputElement
+
+  // Kiểm tra định dạng số điện thoại Việt Nam (10 số, bắt đầu bằng 03, 05, 07, 08, 09...)
+  const validatePhone = () => {
+    if (!phoneInput) return true
+    const phoneValue = phoneInput.value.trim()
+    const vnPhonePattern =
+      /^(0|\+84)(3[2-9]|5[2689]|7[0|6-9]|8[1-9]|9[0-9])[0-9]{7}$/
+
+    if (phoneValue && !vnPhonePattern.test(phoneValue)) {
+      phoneInput.setCustomValidity(
+        "Số điện thoại không hợp lệ (ví dụ: 0989846666)"
+      )
+      return false
+    } else {
+      phoneInput.setCustomValidity("")
+      return true
+    }
+  }
+
+  // Xóa cảnh báo lỗi cũ ngay khi người dùng bắt đầu sửa thông tin
+  phoneInput?.addEventListener("input", () => {
+    phoneInput.setCustomValidity("")
+  })
+
+  // Đăng ký sự kiện submit
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    const isPhoneValid = validatePhone()
+    if (!isPhoneValid) {
+      phoneInput.reportValidity()
+      return
+    }
+
+    // Giả lập gửi form thành công
+    alert("Gửi thông tin liên hệ thành công!")
+    form.reset()
+  })
+</script>

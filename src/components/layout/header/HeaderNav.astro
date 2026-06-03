@@ -1,0 +1,29 @@
+---
+import HeaderNavItem from "./HeaderNavItem.astro"
+
+interface Props {
+  navItems: {
+    title: string
+    href?: string
+    submenu?: { title: string; href: string }[]
+  }[]
+}
+
+const { navItems } = Astro.props
+---
+
+<nav class="hidden xl:block">
+  <ul class="flex items-center gap-4 h-full">
+    {
+      navItems.map((item) => (
+        <li class="h-full flex items-center relative group cursor-pointer">
+          <HeaderNavItem
+            title={item.title}
+            href={item.href}
+            submenu={item.submenu}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</nav>

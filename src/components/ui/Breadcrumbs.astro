@@ -1,0 +1,95 @@
+---
+import { SITE_URL } from "@/utils/seo"
+import { ChevronRight } from "../svgs/config"
+
+interface BreadcrumbItem {
+  name: string
+  url?: string
+}
+
+interface Props {
+  items?: BreadcrumbItem[]
+}
+
+const { items } = Astro.props
+
+// Tự động phân tích URL nếu không truyền danh sách items
+let breadcrumbs: BreadcrumbItem[] = []
+
+if (items) {
+  breadcrumbs = items
+} else {
+  // Lấy ra danh sách các segment trong path, ví dụ: "/blog/hello-world" -> ["blog", "hello-world"]
+  const pathSegments = Astro.url.pathname
+    .split("/")
+    .filter((segment) => segment !== "")
+
+  breadcrumbs.push({ name: "Trang chủ", url: "/" })
+
+  let currentPath = ""
+  pathSegments.forEach((segment, index) => {
+    currentPath += `/${segment}`
+    // Viết hoa chữ đầu của segment hoặc chuyển đổi chữ đẹp mắt hơn
+    let name = segment.replace(/-/g, " ")
+    name = name.charAt(0).toUpperCase() + name.slice(1)
+
+    // Custom hiển thị một số segment đặc biệt
+    if (segment === "blog") name = "Blog"
+    if (segment === "about") name = "Giới thiệu"
+    if (segment === "contact") name = "Liên hệ"
+
+    // Nếu là phần tử cuối cùng thì không cần link (chỉ hiển thị text)
+    const isLast = index === pathSegments.length - 1
+    breadcrumbs.push({
+      name,
+      url: isLast ? undefined : currentPath,
+    })
+  })
+}
+
+// Cấu trúc Schema BreadcrumbList cho Google SEO
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.name,
+    item: item.url
+      ? `${SITE_URL}${item.url}`
+      : `${SITE_URL}${Astro.url.pathname}`,
+  })),
+}
+---
+
+<nav aria-label="Breadcrumb" class="text-[#8C8C8C] bg-[#ECEEEF] py-3.5">
+  <ul class="container">
+    {
+      breadcrumbs.map((item, index) => {
+        const isLast = index === breadcrumbs.length - 1
+        return (
+          <li class="inline-block">
+            {index > 0 && (
+              <ChevronRight class="size-4 mx-1 inline-block mb-0.5" />
+            )}
+            {isLast ? (
+              <span class="text-primary" aria-current="page">
+                {item.name}
+              </span>
+            ) : (
+              <a href={item.url} class="hover:text-secondary">
+                {item.name}
+              </a>
+            )}
+          </li>
+        )
+      })
+    }
+  </ul>
+</nav>
+
+<!-- Nhúng Schema Structured Data -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(breadcrumbSchema)}
+/>

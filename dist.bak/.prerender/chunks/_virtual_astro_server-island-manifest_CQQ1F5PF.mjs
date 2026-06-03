@@ -1,7 +1,5 @@
-const serverIslandMap = new Map([
+const serverIslandMap = new Map([])
 
-]);
+const serverIslandNameMap = new Map([])
 
-const serverIslandNameMap = new Map([]);
-
-export { serverIslandMap, serverIslandNameMap };
+export { serverIslandMap, serverIslandNameMap }

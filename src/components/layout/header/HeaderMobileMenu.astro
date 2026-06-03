@@ -1,0 +1,109 @@
+---
+// HeaderMobileMenu.astro
+import { Menu, Close, ChevronDown } from "@/components/svgs/config"
+
+interface Props {
+  navItems: {
+    title: string
+    href?: string
+    submenu?: { title: string; href: string }[]
+  }[]
+}
+
+const { navItems } = Astro.props
+---
+
+<div class="xl:hidden flex items-center">
+  <!-- Mobile Menu Toggle Button -->
+  <button
+    id="mobile-menu-trigger"
+    class="text-white hover:text-secondary focus:outline-none p-2 cursor-pointer transition-colors"
+    aria-label="Toggle mobile menu"
+  >
+    <Menu class="size-6" />
+  </button>
+
+  <!-- Mobile Drawer Overlay -->
+  <div
+    id="mobile-drawer"
+    class="fixed inset-0 bg-primary/98 z-999 translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-4 pointer-events-none"
+  >
+    <div class="flex justify-between items-center mb-10">
+      <span class="text-secondary text-[1.25rem] font-bold uppercase">
+        LUXIARC MENU
+      </span>
+      <button
+        id="mobile-menu-close"
+        class="text-white hover:text-secondary focus:outline-none p-2 cursor-pointer transition-colors"
+        aria-label="Close mobile menu"
+      >
+        <Close class="w-6 h-6" />
+      </button>
+    </div>
+
+    <!-- Mobile Navigation links -->
+    <nav class="overflow-y-auto pr-2">
+      <ul class="flex flex-col gap-6 list-none m-0 p-0">
+        {
+          navItems.map((item) => (
+            <li class="mobile-nav-group">
+              {item.submenu ? (
+                <details class="group/mobile">
+                  <summary class="flex justify-between items-center text-white hover:text-secondary transition-colors font-semibold text-[1.125rem] uppercase cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                    {item.title}
+                    <ChevronDown class="w-4 h-4 group-open/mobile:rotate-180 transition-transform duration-300" />
+                  </summary>
+                  <ul class="flex flex-col gap-3.5 pl-4 mt-3 border-l border-white text-white list-none m-0 p-0">
+                    {item.submenu.map((sub) => (
+                      <li>
+                        <a
+                          href={sub.href}
+                          class="hover:text-secondary transition-colors text-sm uppercase font-medium block"
+                        >
+                          {sub.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : (
+                <a
+                  href={item.href}
+                  class="text-white hover:text-secondary transition-colors font-semibold text-[1.125rem] uppercase block"
+                >
+                  {item.title}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<script>
+  function setupMobileMenu() {
+    const trigger = document.getElementById("mobile-menu-trigger")
+    const close = document.getElementById("mobile-menu-close")
+    const drawer = document.getElementById("mobile-drawer")
+
+    if (!trigger || !close || !drawer) return
+
+    trigger.addEventListener("click", () => {
+      drawer.classList.remove("translate-x-full")
+      drawer.classList.remove("pointer-events-none")
+      document.body.style.overflow = "hidden"
+    })
+
+    close.addEventListener("click", () => {
+      drawer.classList.add("translate-x-full")
+      drawer.classList.add("pointer-events-none")
+      document.body.style.overflow = ""
+    })
+  }
+
+  // Khởi chạy khi tải trang
+  document.addEventListener("DOMContentLoaded", setupMobileMenu)
+  document.addEventListener("astro:page-load", setupMobileMenu)
+</script>

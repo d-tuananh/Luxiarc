@@ -1,0 +1,7 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://luxiarc.vn/sitemap-index.xml
+Sitemap: https://luxiarc.vn/sitemap-0.xml

@@ -1,0 +1,105 @@
+---
+import { SITE_URL } from "@/utils/seo"
+
+interface Props {
+  type?: "website" | "article"
+  title: string
+  description: string
+  url: string
+  image: string
+  pubDate?: Date | string
+  updatedDate?: Date | string
+  author?: string
+}
+
+const {
+  type = "website",
+  title,
+  description,
+  url,
+  image,
+  pubDate,
+  updatedDate,
+  author = "LuxiArc",
+} = Astro.props
+
+// 1. Schema cho Doanh nghiệp (Organization)
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
+  name: "LuxiArc",
+  url: SITE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/images/logo.png`,
+    caption: "LuxiArc Logo",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+84-900-000-000",
+    contactType: "customer service",
+    areaServed: "VN",
+    availableLanguage: "Vietnamese",
+  },
+}
+
+// 2. Schema cho Trang Web (WebSite)
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: "LuxiArc",
+  description: "Thiết kế & Thi công nội thất chuyên nghiệp",
+  publisher: {
+    "@id": `${SITE_URL}/#organization`,
+  },
+}
+
+// 3. Schema cho Bài viết (BlogPosting/Article)
+let articleSchema = null
+if (type === "article") {
+  articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}/#article`,
+    isPartOf: {
+      "@id": `${SITE_URL}/#website`,
+    },
+    headline: title,
+    description: description,
+    image: image,
+    datePublished: pubDate ? new Date(pubDate).toISOString() : undefined,
+    dateModified: updatedDate
+      ? new Date(updatedDate).toISOString()
+      : pubDate
+        ? new Date(pubDate).toISOString()
+        : undefined,
+    author: {
+      "@type": "Person",
+      name: author,
+    },
+    publisher: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+    mainEntityOfPage: url,
+  }
+}
+---
+
+<!-- Schema chính toàn trang -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(organizationSchema)}
+/>
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+<!-- Schema dành riêng cho bài viết chi tiết -->{
+  articleSchema && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(articleSchema)}
+    />
+  )
+}

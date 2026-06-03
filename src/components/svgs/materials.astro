@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from "astro/types"
+import { cn } from "@/utils/cn"
+
+type Props = HTMLAttributes<"svg">
+const { class: className, ...props } = Astro.props
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  class={cn("size-full", className)}
+  {...props}
+>
+  <path d="M12 3h10v10H12zm-2 4h2v14h-2zm-4 4h2v10H6zm-4 4h2v6H2z"></path>
+</svg>

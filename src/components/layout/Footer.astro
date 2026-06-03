@@ -1,5 +1,40 @@
-<footer class="border-t border-slate-200 bg-white">
-  <div class="mx-auto max-w-5xl px-4 py-6 text-sm text-slate-600">
-    © {new Date().getFullYear()} LuxiArc. Built with Astro.
+---
+import FooterInfo from "./footer/FooterInfo.astro"
+import FooterLinks from "./footer/FooterLinks.astro"
+import FooterCopyright from "./footer/FooterCopyright.astro"
+
+const linksList = [
+  "Quy trình làm việc",
+  "Hình thức thanh toán",
+  "Chính sách giao hàng",
+  "Chính sách đổi trả hàng",
+  "Chính sách bảo hành",
+  "Kiểm tra bảo hành sản phẩm",
+]
+---
+
+<footer
+  class="relative overflow-hidden pt-16 border-t border-white/5 bg-primary [background-blend-mode:overlay,normal] bg-cover bg-no-repeat"
+  style="background-image: url('/src/styles/images/image1.png');"
+>
+  <div class="container pb-12">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12"
+    >
+      <!-- Cột 1: Thông tin công ty & liên hệ -->
+      <FooterInfo />
+
+      <!-- Cột 2: Liên kết 1 -->
+      <FooterLinks title="LIÊN KẾT" links={linksList} />
+
+      <!-- Cột 3: Liên kết 2 -->
+      <FooterLinks title="LIÊN KẾT" links={linksList} />
+
+      <!-- Cột 4: Liên kết 3 -->
+      <FooterLinks title="LIÊN KẾT" links={linksList} />
+    </div>
   </div>
+
+  <!-- Gold Gradient Copyright Bar -->
+  <FooterCopyright />
 </footer>

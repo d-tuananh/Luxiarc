@@ -1,0 +1,97 @@
+---
+import { getCanonicalURL, getAbsoluteURL } from "@/utils/seo"
+import JsonLd from "./JsonLd.astro"
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+  type?: "website" | "article"
+  canonicalURL?: string
+  noindex?: boolean
+  // Article specific attributes
+  pubDate?: Date | string
+  updatedDate?: Date | string
+  author?: string
+  tags?: string[]
+}
+
+const {
+  title = "LuxiArc - Thiết kế & Thi công nội thất chuyên nghiệp",
+  description = "LuxiArc chuyên tư vấn thiết kế và thi công nội thất trọn gói. Đảm bảo chất lượng công trình vượt trội, tối ưu chi phí và bàn giao đúng tiến độ.",
+  image = "/images/og-default.jpg",
+  type = "website",
+  canonicalURL = getCanonicalURL(Astro.url.pathname),
+  noindex = false,
+  pubDate,
+  updatedDate,
+  author = "LuxiArc",
+  tags = [],
+} = Astro.props
+
+const formattedTitle = title.includes("LuxiArc") ? title : `${title} | LuxiArc`
+const absoluteImageUrl = getAbsoluteURL(image)
+const robotsValue = noindex
+  ? "noindex, nofollow"
+  : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+---
+
+<!-- Tối ưu hóa SEO Tiêu đề & Mô tả -->
+<title>{formattedTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+<meta name="robots" content={robotsValue} />
+
+<!-- OpenGraph (Facebook) -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content="LuxiArc" />
+<meta property="og:image" content={absoluteImageUrl} />
+<meta property="og:image:secure_url" content={absoluteImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="vi_VN" />
+
+<!-- OpenGraph cho Bài viết (Article Info) -->
+{
+  type === "article" && (
+    <>
+      {pubDate && (
+        <meta
+          property="article:published_time"
+          content={new Date(pubDate).toISOString()}
+        />
+      )}
+      {updatedDate && (
+        <meta
+          property="article:modified_time"
+          content={new Date(updatedDate).toISOString()}
+        />
+      )}
+      <meta property="article:author" content={author} />
+      {tags.map((tag) => (
+        <meta property="article:tag" content={tag} />
+      ))}
+    </>
+  )
+}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absoluteImageUrl} />
+
+<!-- Tích hợp JSON-LD Structured Data Schema -->
+<JsonLd
+  type={type}
+  title={formattedTitle}
+  description={description}
+  url={canonicalURL}
+  image={absoluteImageUrl}
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  author={author}
+/>

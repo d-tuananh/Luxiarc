@@ -1,0 +1,38 @@
+@import "stylesheet.css";
+@import "defaults.css";
+@import "tailwindcss";
+
+@theme {
+  --color-main: #3f3f3f;
+  --color-primary: #132029;
+  --color-secondary: #dfc976;
+
+  --breakpoint-xs: 450px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1344px;
+
+  --font-oswald: "Oswald";
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@utility title-head {
+  @apply text-[1.5rem] lg:text-[2rem] uppercase font-semibold text-primary;
+}
+
+@utility btn {
+  @apply block w-fit py-3 px-4 text-white bg-secondary hover:bg-primary font-bold cursor-pointer;
+}
+
+@media (max-width: 576px) {
+  .max-lg\:container,
+  .container {
+    max-width: 576px;
+  }
+}

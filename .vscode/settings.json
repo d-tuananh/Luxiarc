@@ -1,0 +1,55 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Loại trừ các thư mục build/cache khỏi tìm kiếm và theo dõi file của VS Code (tối ưu RAM/CPU)
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.astro": true
+  },
+  "search.useIgnoreFiles": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.astro": true
+  },
+
+  // Cấu hình hỗ trợ gợi ý class Tailwind CSS
+  "tailwindCSS.experimental.classRegex": [
+    ["class:list=\\[\\s*([^\\}]+)\\s*\\]", "'([^']*)'"],
+    ["class:list=\\[\\s*([^\\}]+)\\s*\\]", "\"([^\"]*)\""],
+    ["cn\\(([^\\)]+)\\)", "'([^']*)'"],
+    ["cn\\(([^\\)]+)\\)", "\"([^\"]*)\""]
+  ]
+}

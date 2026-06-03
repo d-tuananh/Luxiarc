@@ -1,0 +1,82 @@
+---
+// HomeFAQ.astro - Hỏi đáp FAQ
+import { getFAQs } from "../services"
+
+const faq = await getFAQs()
+---
+
+<section class="py-8 container">
+  <h2 class="title-head mb-4 text-center">FAQ?</h2>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4">
+    {
+      faq.map((item, index) => (
+        <div class="faq-item">
+          <button
+            class="faq-trigger w-full flex gap-2 text-primary items-center bg-[#F2F4F5] transition-colors py-3 px-4 cursor-pointer"
+            aria-expanded="false"
+            aria-controls={`faq-left-content-${index}`}
+          >
+            <span class="flex-1 text-[1.125rem] text-left">{item.title}</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div
+            id={`faq-left-content-${index}`}
+            class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-oute"
+          >
+            <div class="s-content pt-3">{item.content}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const initFAQ = function () {
+    const faqItems = document.querySelectorAll(".faq-item")
+    faqItems.forEach(function (item) {
+      const trigger = item.querySelector(".faq-trigger")
+      const content = item.querySelector(".faq-content") as HTMLElement
+      const icon = item.querySelector(".faq-icon")
+
+      if (!trigger || !content || !icon) return
+
+      trigger.addEventListener("click", function () {
+        const isOpen = item.classList.contains("active")
+
+        // Thu gọn tất cả các câu hỏi khác (accordion mode)
+        document.querySelectorAll(".faq-item").forEach(function (otherItem) {
+          if (otherItem !== item && otherItem.classList.contains("active")) {
+            otherItem.classList.remove("active")
+            const otherContent = otherItem.querySelector(
+              ".faq-content"
+            ) as HTMLElement
+            const otherIcon = otherItem.querySelector(".faq-icon")
+            const otherTrigger = otherItem.querySelector(".faq-trigger")
+            if (otherContent) otherContent.style.maxHeight = "0"
+            if (otherIcon) otherIcon.textContent = "+"
+            if (otherTrigger)
+              otherTrigger.setAttribute("aria-expanded", "false")
+          }
+        })
+
+        if (isOpen) {
+          item.classList.remove("active")
+          content.style.maxHeight = "0"
+          icon.textContent = "+"
+          trigger.setAttribute("aria-expanded", "false")
+        } else {
+          item.classList.add("active")
+          content.style.maxHeight = content.scrollHeight + "px"
+          icon.textContent = "−" // Dấu trừ dài chuẩn
+          trigger.setAttribute("aria-expanded", "true")
+        }
+      })
+    })
+  }
+
+  // Khởi chạy khi DOM đã sẵn sàng
+  document.addEventListener("DOMContentLoaded", initFAQ)
+  document.addEventListener("astro:page-load", initFAQ)
+</script>

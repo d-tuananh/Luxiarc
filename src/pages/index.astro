@@ -1,8 +1,26 @@
-﻿---
-import HomePage from "@features/home/HomePage.astro";
-import Layout from "@layouts/Layout.astro";
+---
+import {
+  HomeBanner,
+  HomeIntro,
+  HomeContact,
+  HomeSolutions,
+  HomeProcess,
+  HomeTestimonials,
+  HomeWhyChooseUs,
+  HomeNews,
+  HomeFAQ,
+} from "@/features/home/config"
+import Layout from "@/layouts/Layout.astro"
 ---
 
-<Layout title="LuxiArc" fullWidth={true} showHeader={false} showFooter={false}>
-  <HomePage />
+<Layout title="LuxiArc">
+  <HomeBanner />
+  <HomeIntro />
+  <HomeContact />
+  <HomeSolutions />
+  <HomeProcess />
+  <HomeTestimonials />
+  <HomeWhyChooseUs />
+  <HomeNews />
+  <HomeFAQ />
 </Layout>

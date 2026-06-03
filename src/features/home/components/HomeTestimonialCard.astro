@@ -1,0 +1,31 @@
+---
+import { Quote } from "@/components/svgs/config"
+import { cn } from "@/utils/cn"
+
+interface Props {
+  avatar: string
+  name: string
+  text: string
+  class?: string
+}
+
+const { avatar, name, text, class: className } = Astro.props
+---
+
+<div class={cn("bg-white p-6 relative h-full", className)}>
+  <Quote
+    class="text-[#718799] size-8 absolute top-4 right-4 pointer-events-none"
+    aria-hidden="true"
+  />
+  <div>
+    <div class="flex items-center gap-3 mb-6">
+      <div class="size-14 rounded-full c-img shrink-0 overflow-hidden">
+        <img src={avatar} alt={name} />
+      </div>
+      <span class="text-[1.25rem] font-medium text-[#00335D]">
+        {name}
+      </span>
+    </div>
+    <div class="s-content">{text}</div>
+  </div>
+</div>

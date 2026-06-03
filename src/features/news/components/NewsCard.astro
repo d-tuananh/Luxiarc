@@ -1,0 +1,37 @@
+---
+// NewsCard.astro
+import { Calendar, Eye } from "@/components/svgs/config"
+import type { NewsItem } from "../types"
+
+interface Props {
+  item: NewsItem
+}
+
+const { item } = Astro.props
+---
+
+<article class="cursor-pointer">
+  <a href="" title="" class="overflow-hidden c-img pt-[61%] mb-3">
+    <img src={item.image} alt={item.title} loading="lazy" />
+  </a>
+
+  <div class="flex items-center gap-4 text-[#8F8F8F] text-[0.875rem] mb-2">
+    <div class="flex items-center gap-1">
+      <Calendar class="size-3.5 shrink-0" />
+      <span>{item.date}</span>
+    </div>
+    <div class="flex items-center gap-1">
+      <Eye class="size-3.5 shrink-0" />
+      <span>{item.views}</span>
+    </div>
+  </div>
+
+  <a
+    href=""
+    class="text-[1.125rem] font-semibold hover:text-secondary line-clamp-2 mb-2"
+  >
+    {item.title}
+  </a>
+
+  <div class="s-content line-clamp-2">{item.description}</div>
+</article>

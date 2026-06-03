@@ -42,19 +42,21 @@ src/
 ## 2. Quy Tắc Cách Sử Dụng Thư Mục
 
 ### 📁 `src/features/` (Thư mục quan trọng nhất)
-* Khi bạn chuẩn bị làm một trang mới hoặc tính năng mới (Ví dụ: Danh sách dự án - **Projects**, Tin tức - **Blog**, Dịch vụ - **Services**):
+
+- Khi bạn chuẩn bị làm một trang mới hoặc tính năng mới (Ví dụ: Danh sách dự án - **Projects**, Tin tức - **Blog**, Dịch vụ - **Services**):
   1. Tạo một thư mục mới nằm dưới `src/features/` (ví dụ: `src/features/projects/`).
   2. Tạo các thư mục con bên trong tùy nhu cầu:
-     * `components/`: Chứa các component giao diện riêng của tính năng đó (ví dụ: `ProjectCard.astro`, `ProjectGrid.astro`).
-     * `services/` hoặc file `services.ts`: Gọi các API của riêng tính năng đó.
-     * `types.ts`: Định nghĩa kiểu dữ liệu.
+     - `components/`: Chứa các component giao diện riêng của tính năng đó (ví dụ: `ProjectCard.astro`, `ProjectGrid.astro`).
+     - `services/` hoặc file `services.ts`: Gọi các API của riêng tính năng đó.
+     - `types.ts`: Định nghĩa kiểu dữ liệu.
 
 ### 📁 `src/components/` (Component dùng chung toàn cục)
-* Chỉ đưa vào đây các component có tính chất **tái sử dụng ở nhiều tính năng khác nhau**.
-* Ví dụ: Nút bấm `Button.astro`, hộp thoại `Modal.astro`, thanh tìm kiếm chung `SearchBar.astro`.
-* Cấu trúc con nên chia theo:
-  * `ui/`: Chứa các phần tử nhỏ (atoms/molecules).
-  * `layout/`: Chứa các phần tử cấu thành Layout (Header, Footer, Sidebar).
+
+- Chỉ đưa vào đây các component có tính chất **tái sử dụng ở nhiều tính năng khác nhau**.
+- Ví dụ: Nút bấm `Button.astro`, hộp thoại `Modal.astro`, thanh tìm kiếm chung `SearchBar.astro`.
+- Cấu trúc con nên chia theo:
+  - `ui/`: Chứa các phần tử nhỏ (atoms/molecules).
+  - `layout/`: Chứa các phần tử cấu thành Layout (Header, Footer, Sidebar).
 
 ---
 
@@ -63,37 +65,41 @@ src/
 Để code chuyên nghiệp và dễ đọc, hãy thống nhất các quy tắc sau:
 
 ### 1. Tên Component (.astro, .tsx, .jsx)
-* **Quy tắc:** Sử dụng **PascalCase** (Viết hoa chữ cái đầu của mỗi từ).
-* **Ví dụ tốt:** `HomeBanner.astro`, `ContactForm.astro`, `ProjectCard.astro`.
-* **Ví dụ xấu:** `home-banner.astro`, `contact_form.astro`.
+
+- **Quy tắc:** Sử dụng **PascalCase** (Viết hoa chữ cái đầu của mỗi từ).
+- **Ví dụ tốt:** `HomeBanner.astro`, `ContactForm.astro`, `ProjectCard.astro`.
+- **Ví dụ xấu:** `home-banner.astro`, `contact_form.astro`.
 
 ### 2. Tên Thư Mục Tính Năng (trong `src/features/`)
-* **Quy tắc:** Sử dụng **kebab-case** (viết thường toàn bộ, cách nhau bằng dấu gạch ngang) hoặc viết thường một từ số ít.
-* **Ví dụ tốt:** `home`, `projects`, `api-toolkit`.
+
+- **Quy tắc:** Sử dụng **kebab-case** (viết thường toàn bộ, cách nhau bằng dấu gạch ngang) hoặc viết thường một từ số ít.
+- **Ví dụ tốt:** `home`, `projects`, `api-toolkit`.
 
 ### 3. Tên File Logic / Helper (.js, .ts)
-* **Quy tắc:** Sử dụng **camelCase** (chữ đầu viết thường, các chữ sau viết hoa chữ cái đầu).
-* **Ví dụ tốt:** `projectService.ts`, `formatDate.ts`, `useAuth.ts`.
+
+- **Quy tắc:** Sử dụng **camelCase** (chữ đầu viết thường, các chữ sau viết hoa chữ cái đầu).
+- **Ví dụ tốt:** `projectService.ts`, `formatDate.ts`, `useAuth.ts`.
 
 ---
 
 ## 4. Các Lưu Ý Quan Trọng (Best Practices)
 
 ### 🚀 1. Sử dụng triệt để Path Alias `@/`
-* Tránh sử dụng relative path dài dòng như `../../components/layout/Header.astro`.
-* Sử dụng `@/` để trỏ trực tiếp đến `src/`:
+
+- Tránh sử dụng relative path dài dòng như `../../components/layout/Header.astro`.
+- Sử dụng `@/` để trỏ trực tiếp đến `src/`:
+
   ```astro
-  // ❌ KHÔNG NÊN:
-  import Header from "../components/layout/Header.astro";
-  
-  //  NÊN DÙNG:
-  import Header from "@/components/layout/Header.astro";
+  // ❌ KHÔNG NÊN: import Header from "../components/layout/Header.astro"; //
+  NÊN DÙNG: import Header from "@/components/layout/Header.astro";
   ```
 
 ### 📦 2. Độc lập tính năng (Feature Encapsulation)
-* Cố gắng giữ cho các thư mục trong `src/features/[feature-name]` **độc lập tối đa**.
-* Hạn chế việc component của feature này import component của feature khác. Nếu có hai feature cần dùng chung một component, hãy di chuyển component đó ra `src/components/` toàn cục.
+
+- Cố gắng giữ cho các thư mục trong `src/features/[feature-name]` **độc lập tối đa**.
+- Hạn chế việc component của feature này import component của feature khác. Nếu có hai feature cần dùng chung một component, hãy di chuyển component đó ra `src/components/` toàn cục.
 
 ### 🔌 3. Giữ file Router ở `src/pages/` cực kỳ mỏng
-* Các file trong `src/pages/` chỉ nên làm nhiệm vụ **định nghĩa router**, nhận dữ liệu từ Server (Frontmatter) và render ra Layout cùng các Component từ thư mục `features`.
-* Hạn chế viết HTML dài hàng trăm dòng trực tiếp trong các file `src/pages/`. Hãy tách chúng ra thành component trong thư mục feature tương ứng.
+
+- Các file trong `src/pages/` chỉ nên làm nhiệm vụ **định nghĩa router**, nhận dữ liệu từ Server (Frontmatter) và render ra Layout cùng các Component từ thư mục `features`.
+- Hạn chế viết HTML dài hàng trăm dòng trực tiếp trong các file `src/pages/`. Hãy tách chúng ra thành component trong thư mục feature tương ứng.

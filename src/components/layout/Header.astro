@@ -1,11 +1,61 @@
-<header class="border-b border-slate-200 bg-white">
-  <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-    <a href="/" class="text-lg font-bold">LuxiArc</a>
-    <div class="flex flex-wrap gap-4 text-sm font-medium">
-      <a href="/" class="hover:text-blue-600">Home</a>
-      <a href="/about" class="hover:text-blue-600">About</a>
-      <a href="/contact" class="hover:text-blue-600">Contact</a>
-      <a href="/client-api" class="hover:text-blue-600">API</a>
+---
+import HeaderLogo from "./header/HeaderLogo.astro"
+import HeaderNav from "./header/HeaderNav.astro"
+import HeaderPhone from "./header/HeaderPhone.astro"
+import HeaderMobileMenu from "./header/HeaderMobileMenu.astro"
+
+const navItems = [
+  { title: "Giới thiệu", href: "/about" },
+  {
+    title: "Tư Vấn & Pháp Lý",
+    submenu: [
+      { title: "Quy trình làm việc", href: "#" },
+      { title: "Hình thức thanh toán", href: "#" },
+      { title: "Thủ tục pháp lý & Cấp phép", href: "#" },
+    ],
+  },
+  {
+    title: "Thiết Kế & Thi Công",
+    submenu: [
+      { title: "Thiết kế kiến trúc", href: "#" },
+      { title: "Thiết kế nội thất", href: "#" },
+      { title: "Thi công trọn gói", href: "#" },
+    ],
+  },
+  {
+    title: "Kỹ Thuật & Vật Tư",
+    submenu: [
+      { title: "Tiêu chuẩn kỹ thuật", href: "#" },
+      { title: "Vật liệu hoàn thiện", href: "#" },
+      { title: "Nhà máy sản xuất", href: "#" },
+    ],
+  },
+  {
+    title: "Hậu Mãi",
+    submenu: [
+      { title: "Chính sách bảo hành", href: "#" },
+      { title: "Kiểm tra bảo hành sản phẩm", href: "#" },
+      { title: "Bảo dưỡng định kỳ", href: "#" },
+    ],
+  },
+  { title: "Liên hệ", href: "/contact" },
+]
+---
+
+<header
+  class="relative z-50 bg-primary border-b border-white/5 shadow-lg shadow-black/15"
+>
+  <div class="container flex gap-5 h-17.75">
+    <!-- Logo block -->
+    <HeaderLogo />
+
+    <!-- Navigation block -->
+    <HeaderNav navItems={navItems} />
+
+    <!-- Right actions block (Phone & Mobile menu toggle) -->
+    <div class="flex items-center gap-4">
+      <HeaderPhone />
+      <HeaderMobileMenu navItems={navItems} />
     </div>
-  </nav>
+  </div>
 </header>

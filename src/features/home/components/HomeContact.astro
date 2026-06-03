@@ -1,0 +1,38 @@
+---
+import HomeContactForm from "./HomeContactForm.astro"
+import { getHomeConfig } from "../services"
+
+const homeConfig = await getHomeConfig()
+const contact = homeConfig?.home.contact
+---
+
+<section class="lg:container max-lg:relative">
+  <div class="lg:relative flex flex-wrap py-10 lg:pb-0 max-lg:container">
+    <div
+      class="before:absolute before:inset-0 before:z-1 before:bg-[linear-gradient(0deg,rgba(16,29,37,0.75)_0%,rgba(16,29,37,0.75)_100%)] absolute! inset-x-0 top-0 h-full lg:h-[calc(100%-62px)] c-img -z-1"
+    >
+      <img src={contact?.background || "src/styles/images/image2.jpg"} alt="" />
+    </div>
+    <!-- Cột trái: Nội dung giới thiệu liên hệ -->
+    <div class="w-full lg:w-1/2 pb-10 lg:pb-28 text-white lg:px-[2vw]">
+      <span
+        class="inline-block rounded-full py-2 px-6 bg-white/20 font-bold uppercase mb-10"
+      >
+        {contact?.badge || "Perfect Service"}
+      </span>
+      <h2 class="title-head mb-3 text-white">
+        {contact?.title || "Hãy liên hệ với chúng tôi / Chúng tôi ở đây để lắng nghe"}
+      </h2>
+      <div class="s-content">
+        <p>
+          {contact?.content || "Để lại thông tin để nhận tư vấn chuyên sâu và báo giá sơ bộ cho công trình của bạn."}
+        </p>
+      </div>
+    </div>
+
+    <!-- Cột phải: Form đăng ký thông tin -->
+    <div class="w-full lg:w-1/2">
+      <HomeContactForm />
+    </div>
+  </div>
+</section>

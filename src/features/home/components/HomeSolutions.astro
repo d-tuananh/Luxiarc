@@ -1,0 +1,107 @@
+---
+// Component Giải pháp xây dựng toàn diện
+import { ChevronLeft, ChevronRight } from "@/components/svgs/config"
+---
+
+<section class="container py-16 lg:py-24 overflow-hidden">
+  <div
+    class="grid grid-cols-1 lg:grid-cols-[1fr_2.2fr] gap-10 lg:gap-16 items-center"
+  >
+    <!-- Cột trái: Tiêu đề & Mô tả -->
+    <div>
+      <h2 class="title-head mb-4">Giải pháp xây dựng toàn diện</h2>
+      <div class="s-content mb-6">
+        <p>
+          Chúng tôi cung cấp chuỗi dịch vụ khép kín, đảm bảo tính thống nhất và
+          chất lượng cao nhất cho mọi công trình.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consa cras cras quis. Tortor ante
+          adipiscing venenatis praesent morbi mattis. Dignissim vivamus
+          ultricies urna.
+        </p>
+      </div>
+
+      <!-- Điều khiển Swiper Navigation -->
+      <div class="flex gap-2">
+        <button
+          class="swiper-prev-solutions border border-secondary text-secondary hover:bg-secondary hover:text-white size-8 flex items-center justify-center cursor-pointer"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft class="size-full" />
+        </button>
+        <button
+          class="swiper-next-solutions border border-secondary text-secondary hover:bg-secondary hover:text-white size-8 flex items-center justify-center cursor-pointer"
+          aria-label="Next slide"
+        >
+          <ChevronRight class="size-full" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Cột phải: Slider Swiper -->
+    <div class="swiper home-solutions-slider w-full overflow-visible">
+      <div class="swiper-wrapper">
+        {
+          Array.from({ length: 5 }).map((_, _index) => (
+            <div class="swiper-slide">
+              <div class="c-img pt-[111%] before:absolute before:inset-0 before:bg-black/50 before:z-1">
+                <img
+                  src={`https://placehold.co/600x800/ccc/a0b0c0?text=LuxiArc+Architecture+Design`}
+                  alt="Thiết Kế Kiến Trúc"
+                />
+                <div class="absolute bottom-0 inset-x-0 p-4 z-2 text-white">
+                  <span class="font-semibold text-[1.25rem] line-clamp-2">
+                    — Thiết Kế Kiến Trúc
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import Swiper from "swiper"
+  import { Navigation } from "swiper/modules"
+  import "swiper/css"
+
+  var initSolutionsSlider = function () {
+    var solutionsSlider = document.querySelector(
+      ".home-solutions-slider"
+    ) as HTMLElement
+    if (!solutionsSlider) return false
+
+    new Swiper(solutionsSlider, {
+      modules: [Navigation],
+      slidesPerView: 1.2,
+      spaceBetween: 16,
+      loop: true,
+      navigation: {
+        nextEl: ".swiper-next-solutions",
+        prevEl: ".swiper-prev-solutions",
+      },
+      breakpoints: {
+        450: {
+          slidesPerView: 1.5,
+          spaceBetween: 16,
+        },
+        576: {
+          slidesPerView: 2.1,
+          spaceBetween: 20,
+        },
+        992: {
+          slidesPerView: 2.5,
+          spaceBetween: 24,
+        },
+      },
+    })
+  }
+
+  // Khởi động khi tài liệu sẵn sàng
+  document.addEventListener("DOMContentLoaded", initSolutionsSlider)
+  document.addEventListener("astro:page-load", initSolutionsSlider)
+</script>

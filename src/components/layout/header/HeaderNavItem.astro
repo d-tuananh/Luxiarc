@@ -1,0 +1,43 @@
+---
+import { ChevronDown } from "@/components/svgs/config"
+
+interface Props {
+  title: string
+  href?: string
+  submenu?: { title: string; href: string }[]
+}
+
+const { title, href = "#", submenu } = Astro.props
+---
+
+<a
+  href={href}
+  class="flex items-center text-white hover:text-secondary group-hover:text-secondary transition-colors font-medium"
+>
+  {title}
+  {
+    submenu && (
+      <ChevronDown
+        class="size-4 ml-2 group-hover:text-secondary transition-transform duration-300 group-hover:rotate-180"
+        aria-hidden="true"
+      />
+    )
+  }
+</a>
+
+{
+  submenu && (
+    <ul class="absolute top-full text-white left-0 w-60 bg-primary border-t-2 border-secondary shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 py-2 list-none m-0">
+      {submenu.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="block px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+          >
+            {item.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

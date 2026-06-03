@@ -1,8 +1,28 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import ContactPage from "@features/contact/ContactPage.astro";
+import Layout from "@/layouts/Layout.astro"
+import Breadcrumbs from "@/components/ui/Breadcrumbs.astro"
+import { ContactInfo, ContactForm } from "@/features/contact"
 ---
 
-<Layout title="Lien he | LuxiArc" fullWidth={true} showHeader={false} showFooter={false}>
-  <ContactPage />
+<Layout
+  title="Liên Hệ LuxiArc | Tư Vấn & Thi Công Trọn Gói"
+  description="Liên hệ với LuxiArc để nhận tư vấn thiết kế kiến trúc, thiết kế nội thất, thi công trọn gói và thủ tục cấp phép xây dựng. Hotline: 0989.84.6666."
+>
+  <!-- Breadcrumbs navigation path -->
+  <Breadcrumbs />
+
+  <!-- Contact Form & Info Layout Section -->
+  <section class="py-12 container">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+      <!-- Left: Contact Details & Architectural Drawing -->
+      <div>
+        <ContactInfo />
+      </div>
+
+      <!-- Right: Registration Form Card -->
+      <div>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
 </Layout>
