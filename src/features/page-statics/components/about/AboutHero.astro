@@ -1,0 +1,27 @@
+---
+import { Breadcrumbs } from "@/components/ui"
+import type { AboutConfig, PageStatic } from "@/features/page-statics/types"
+
+interface Props {
+  hero: AboutConfig["hero"]
+  page: PageStatic
+}
+
+const { hero, page } = Astro.props
+---
+
+<section
+  class="relative py-10 min-h-62 flex items-center bg-cover bg-no-repeat bg-center bg-black/50 bg-blend-overlay"
+  style={`background-image: url('${hero.background}');`}
+>
+  <div class="container text-center relative z-10">
+    <h1
+      class="text-secondary leading-none uppercase font-bold text-[1.5rem] md:text-[2.25rem] lg:text-[3rem] mb-8"
+    >
+      {hero.title}
+    </h1>
+    <div class="*:text-white *:bg-transparent *:py-0 [&_span]:text-white">
+      <Breadcrumbs items={[{ name: page.name, url: page.path }]} />
+    </div>
+  </div>
+</section>

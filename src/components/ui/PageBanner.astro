@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string
+  image: string
+}
+
+const { title, image } = Astro.props
+---
+
+<section
+  class="relative z-1 py-10 min-h-[50dvh] bg-cover bg-center bg-no-repeat overflow-hidden before:absolute before:inset-0 before:bg-black/70 before:-z-1 flex items-center"
+  style={`background-image: url('${image}');`}
+>
+  <div class="container text-center">
+    <h1 class="title-head text-white uppercase">{title}</h1>
+  </div>
+</section>

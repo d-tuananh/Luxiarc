@@ -1,5 +1,7 @@
 ---
 // FooterLinks.astro
+import { CLink } from "@/components/ui"
+
 interface Props {
   title?: string
   links: string[]
@@ -16,9 +18,9 @@ const { title = "LIÊN KẾT", links } = Astro.props
     {
       links.map((link) => (
         <li>
-          <a href="#" class="block hover:text-secondary">
+          <CLink href="#" class="block hover:text-secondary">
             {link}
-          </a>
+          </CLink>
         </li>
       ))
     }

@@ -1,0 +1,40 @@
+---
+import { Breadcrumbs, CImage } from "@/components/ui"
+import { ContactInfo, ContactForm } from "@/features/contact"
+import { getContactConfig } from "@/features/page-statics/services"
+import type { PageStatic } from "@/features/page-statics/types"
+
+interface Props {
+  page: PageStatic
+}
+
+const { page } = Astro.props
+
+// Tải cấu hình động từ API config/contact
+const contactConfig = await getContactConfig()
+
+if (!contactConfig) {
+  return null
+}
+---
+
+<Breadcrumbs items={[{ name: page.name }]} />
+<section class="relative">
+  <div class="grid container py-12 grid-cols-1 lg:grid-cols-2 gap-10 lg:pb-50">
+    <div>
+      <ContactInfo contactConfig={contactConfig} page={page} />
+    </div>
+
+    <div>
+      <ContactForm buttonText={contactConfig.form.button_text} />
+    </div>
+  </div>
+
+  {
+    contactConfig?.media?.image && (
+      <div class="lg:absolute lg:-z-1 lg:bottom-0 lg:left-0 lg:h-[65%] w-fit pointer-events-none img__contain img__h-full">
+        <CImage src={contactConfig.media.image} alt={page.name} />
+      </div>
+    )
+  }
+</section>

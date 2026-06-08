@@ -2,36 +2,46 @@
 // NewsCard.astro
 import { Calendar, Eye } from "@/components/svgs/config"
 import type { NewsItem } from "../types"
+import { CImage, CLink } from "@/components/ui"
+import { formatDate } from "@/utils/date"
+import { getLinkByResource } from "@/utils/routes"
 
 interface Props {
   item: NewsItem
 }
 
 const { item } = Astro.props
+
+const imageSrc = item.img || ""
+const formattedDate = item.created_at ? formatDate(item.created_at) : ""
+const viewsCount = item.count !== null ? String(item.count) : "0"
+const detailLink = getLinkByResource(item.resource_type, item.slug)
 ---
 
 <article class="cursor-pointer">
-  <a href="" title="" class="overflow-hidden c-img pt-[61%] mb-3">
-    <img src={item.image} alt={item.title} loading="lazy" />
-  </a>
+  <CLink href={detailLink} title="" class="overflow-hidden c-img pt-[61%] mb-3">
+    <CImage src={imageSrc} alt={item.name} />
+  </CLink>
 
   <div class="flex items-center gap-4 text-[#8F8F8F] text-[0.875rem] mb-2">
     <div class="flex items-center gap-1">
       <Calendar class="size-3.5 shrink-0" />
-      <span>{item.date}</span>
+      <span>{formattedDate}</span>
     </div>
     <div class="flex items-center gap-1">
       <Eye class="size-3.5 shrink-0" />
-      <span>{item.views}</span>
+      <span>{viewsCount}</span>
     </div>
   </div>
 
-  <a
-    href=""
+  <CLink
+    href={detailLink}
     class="text-[1.125rem] font-semibold hover:text-secondary line-clamp-2 mb-2"
   >
-    {item.title}
-  </a>
+    {item.name}
+  </CLink>
 
-  <div class="s-content line-clamp-2">{item.description}</div>
+  {item.short_content && (
+    <div class="s-content line-clamp-2">{item.short_content}</div>
+  )}
 </article>

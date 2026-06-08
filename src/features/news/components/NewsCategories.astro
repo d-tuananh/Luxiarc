@@ -1,0 +1,44 @@
+---
+import { CLink } from "@/components/ui"
+import type { NewsCategory } from "../types"
+import { getLinkByResource, ROUTES } from "@/utils/routes"
+
+interface Props {
+  categories: NewsCategory[]
+  currentCategorySlug?: string
+}
+
+const { categories, currentCategorySlug } = Astro.props
+---
+
+{
+  categories.length > 0 && (
+    <div class="flex flex-wrap items-center gap-3 mb-10 border-b border-[#E5E5E5] pb-5">
+      <CLink
+        href={ROUTES.NEWS.INDEX}
+        class={`px-5 py-2 text-[0.875rem] font-bold tracking-wider uppercase transition border ${
+          !currentCategorySlug
+            ? "bg-secondary text-white border-secondary"
+            : "border-[#3F3F3F] text-[#3F3F3F] hover:bg-secondary hover:border-secondary hover:text-white"
+        }`}
+      >
+        Tất cả
+      </CLink>
+      {categories.map((cat) => {
+        const isActive = cat.slug === currentCategorySlug
+        return (
+          <CLink
+            href={getLinkByResource(cat.resource_type, cat.slug)}
+            class={`px-5 py-2 text-[0.875rem] font-bold tracking-wider uppercase transition border ${
+              isActive
+                ? "bg-secondary text-white border-secondary"
+                : "border-[#3F3F3F] text-[#3F3F3F] hover:bg-secondary hover:border-secondary hover:text-white"
+            }`}
+          >
+            {cat.name}
+          </CLink>
+        )
+      })}
+    </div>
+  )
+}

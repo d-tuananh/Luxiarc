@@ -1,41 +1,54 @@
 ---
 import { Phone, Office, Mail } from "@/components/svgs/config"
+import type { ContactConfig, PageStatic } from "@/features/page-statics/types"
+
+interface Props {
+  contactConfig: ContactConfig
+  page: PageStatic
+}
+
+const { contactConfig, page } = Astro.props
+
+const headingTitle = contactConfig?.heading?.title || page?.name
+const contactTitle = contactConfig?.contact?.title || "Thông tin liên lạc"
+const address = contactConfig?.contact?.address || ""
+const hotline = contactConfig?.contact?.hotline || ""
+const email = contactConfig?.contact?.email || ""
+
+const formattedHotline = hotline.replace(/(\d{4})(\d{3})(\d{3})/, "$1.$2.$3")
+const cleanHotline = hotline.replace(/\D/g, "")
 ---
 
-<!-- Main Header -->
-<h1 class="title-head">LIÊN HỆ VỚI CHÚNG TÔI ĐỂ NHẬN THÔNG TIN</h1>
+<h1 class="text-[1.5rem] lg:text-[1.75rem] text-primary font-bold uppercase">
+  {headingTitle}
+</h1>
 
-<!-- Thin divider -->
 <div class="w-44 h-px bg-[#ACACAC] my-6"></div>
 
-<!-- Contact Info Section -->
-<h2 class="text-[1.25rem] font-bold mb-4">Thông tin liên lạc</h2>
+<h2 class="text-[1.25rem] font-bold mb-4">{contactTitle}</h2>
 
-<!-- Address -->
 <div class="flex items-start mb-3">
   <Office class="size-5 mr-2 shrink-0" />
   <p>
-    <strong class="font-semibold">Trụ sở chính:</strong> Số 52/46, đường Liên Mạc,
-    phường Thượng Cát, thành phố Hà Nội
+    <strong class="font-semibold">Trụ sở chính:</strong>
+    {address}
   </p>
 </div>
 
-<!-- Phone -->
 <div class="flex items-center mb-3">
   <Phone class="size-5 mr-2 shrink-0" />
   <p>
     <strong class="font-semibold">Điện thoại:</strong>
-    <a href="tel:0989846666" class="hover:text-secondary">0989.84.6666</a>
+    <a href={`tel:${cleanHotline}`} class="hover:text-secondary"
+      >{formattedHotline}</a
+    >
   </p>
 </div>
 
-<!-- Email -->
 <div class="flex items-center">
   <Mail class="size-5 mr-2 shrink-0" />
   <p>
     <strong class="font-semibold">Email:</strong>
-    <a href="mailto:luxiarc@gmail.com" class="hover:text-secondary"
-      >luxiarc@gmail.com</a
-    >
+    <a href={`mailto:${email}`} class="hover:text-secondary">{email}</a>
   </p>
 </div>

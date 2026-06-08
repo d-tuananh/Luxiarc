@@ -23,7 +23,10 @@ export class HttpError extends Error {
 /**
  * Hàm gọi request gốc dùng fetch
  */
-async function request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
+async function request<T>(
+  endpoint: string,
+  options: RequestOptions = {}
+): Promise<T> {
   const { params, headers, ...restOptions } = options
 
   // Chuẩn hoá URL: Tránh bị trùng dấu gạch chéo
@@ -70,13 +73,10 @@ async function request<T>(endpoint: string, options: RequestOptions = {}): Promi
       }
 
       const errorObj = errorData as { message?: string } | null
-      const errorMessage = errorObj?.message || `Lỗi kết nối HTTP! Mã lỗi: ${response.status}`
+      const errorMessage =
+        errorObj?.message || `Lỗi kết nối HTTP! Mã lỗi: ${response.status}`
 
-      throw new HttpError(
-        response.status,
-        errorMessage,
-        errorData
-      )
+      throw new HttpError(response.status, errorMessage, errorData)
     }
 
     // Trả về dữ liệu JSON
@@ -87,7 +87,10 @@ async function request<T>(endpoint: string, options: RequestOptions = {}): Promi
       throw error
     }
     // Lỗi mạng hoặc lỗi cấu hình fetch, đính kèm cause gốc để thoả mãn linter
-    throw new Error(error instanceof Error ? error.message : "Đã xảy ra lỗi kết nối mạng", { cause: error })
+    throw new Error(
+      error instanceof Error ? error.message : "Đã xảy ra lỗi kết nối mạng",
+      { cause: error }
+    )
   }
 }
 
@@ -95,30 +98,46 @@ async function request<T>(endpoint: string, options: RequestOptions = {}): Promi
  * Đối tượng API xuất bản các phương thức GET, POST, PUT, DELETE, PATCH
  */
 export const api = {
-  get: <T>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">) =>
-    request<T>(endpoint, { ...options, method: "GET" }),
+  get: <T>(
+    endpoint: string,
+    options?: Omit<RequestOptions, "method" | "body">
+  ) => request<T>(endpoint, { ...options, method: "GET" }),
 
-  post: <T>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method" | "body">) =>
+  post: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: Omit<RequestOptions, "method" | "body">
+  ) =>
     request<T>(endpoint, {
       ...options,
       method: "POST",
       body: body !== undefined ? JSON.stringify(body) : undefined,
     }),
 
-  put: <T>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method" | "body">) =>
+  put: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: Omit<RequestOptions, "method" | "body">
+  ) =>
     request<T>(endpoint, {
       ...options,
       method: "PUT",
       body: body !== undefined ? JSON.stringify(body) : undefined,
     }),
 
-  patch: <T>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method" | "body">) =>
+  patch: <T>(
+    endpoint: string,
+    body?: unknown,
+    options?: Omit<RequestOptions, "method" | "body">
+  ) =>
     request<T>(endpoint, {
       ...options,
       method: "PATCH",
       body: body !== undefined ? JSON.stringify(body) : undefined,
     }),
 
-  delete: <T>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">) =>
-    request<T>(endpoint, { ...options, method: "DELETE" }),
+  delete: <T>(
+    endpoint: string,
+    options?: Omit<RequestOptions, "method" | "body">
+  ) => request<T>(endpoint, { ...options, method: "DELETE" }),
 }

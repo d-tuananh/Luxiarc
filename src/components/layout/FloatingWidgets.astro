@@ -1,0 +1,49 @@
+---
+import { PAGE_SLUGS } from "@/constants/pageSlugs"
+import { SelfDesign, VR360, Compare, Zalo } from "@/components/svgs/config"
+
+const floatingWidgets = [
+  {
+    label: "Tự thiết kế",
+    icon: SelfDesign,
+    link: "/lien-he",
+  },
+  {
+    label: "3D VR360",
+    icon: VR360,
+    link: `/${PAGE_SLUGS.SERVICES}`,
+  },
+  {
+    label: "So sánh",
+    icon: Compare,
+    link: `/${PAGE_SLUGS.KNOWLEDGE}`,
+  },
+  {
+    label: "Liên hệ Zalo",
+    icon: Zalo,
+    link: "/lien-he",
+  },
+]
+---
+
+<!-- Widget nổi tròn cố định góc phải (Sticky Floating Circle Buttons) -->
+<div class="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-40">
+  {
+    floatingWidgets.map((item) => {
+      const Icon = item.icon
+      return (
+        <a href={item.link} class="group btn-floating">
+          <span
+            class="size-6 transition-colors duration-300"
+            style="filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));"
+          >
+            <Icon />
+          </span>
+          <span class="text-[8px] font-bold mt-1 transition-colors duration-300">
+            {item.label}
+          </span>
+        </a>
+      )
+    })
+  }
+</div>

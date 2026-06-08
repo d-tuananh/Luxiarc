@@ -1,0 +1,58 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import {
+  PageBanner,
+  PageIntro,
+  PageContent,
+  GridList,
+  ItemV1,
+} from "@/components/ui"
+import {
+  getMaintenancePageDetails,
+  getMaintenanceItems,
+} from "@/features/maintenance"
+import { PAGE_SLUGS } from "@/constants/pageSlugs"
+import { getLinkByResource } from "@/utils/routes"
+
+const pageDetails = await getMaintenancePageDetails(PAGE_SLUGS.MAINTENANCE)
+
+if (!pageDetails) {
+  return Astro.redirect("/404")
+}
+
+const items = await getMaintenanceItems(PAGE_SLUGS.MAINTENANCE)
+
+// Cấu hình thông tin SEO
+const seoTitle = pageDetails.seo?.title || pageDetails.name || ""
+const seoDesc = pageDetails.seo?.description || pageDetails.name || ""
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <!-- Banner -->
+  <PageBanner title={pageDetails.name} image={pageDetails?.banner || ""} />
+
+  <!-- Introduction Section -->
+  <PageIntro
+    content={pageDetails?.extras.intro_content}
+    image={pageDetails?.extras.intro_image}
+    alt={pageDetails?.name || ""}
+  />
+
+  <!-- Items list Section -->
+  {
+    items && items.length > 0 && (
+      <GridList>
+        {items.map((item) => (
+          <ItemV1
+            title={item.name}
+            image={item.img || ""}
+            href={getLinkByResource(item.resource_type, item.slug)}
+          />
+        ))}
+      </GridList>
+    )
+  }
+
+  <!-- Bottom Paragraph Section -->
+  <PageContent content={pageDetails?.extras.bottom_content} />
+</Layout>

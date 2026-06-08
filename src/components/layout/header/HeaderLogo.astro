@@ -1,10 +1,16 @@
 ---
 // HeaderLogo.astro
+import { CImage } from "@/components/ui"
+
+interface Props {
+  logo?: string | null
+}
+const { logo } = Astro.props
 ---
 
 <a
   href="/"
   class="h-full py-2 img__contain img__h-full w-20.25 block shrink-0 bg-white/10 mr-auto"
 >
-  <img src="/src/styles/images/logo.png" alt="" />
+  <CImage src={logo} fallback="" alt="LuxiArc Logo" />
 </a>

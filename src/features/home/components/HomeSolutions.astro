@@ -1,6 +1,7 @@
 ---
 // Component Giải pháp xây dựng toàn diện
 import { ChevronLeft, ChevronRight } from "@/components/svgs/config"
+import { CImage } from "@/components/ui"
 ---
 
 <section class="container py-16 lg:py-24 overflow-hidden">
@@ -46,7 +47,7 @@ import { ChevronLeft, ChevronRight } from "@/components/svgs/config"
           Array.from({ length: 5 }).map((_, _index) => (
             <div class="swiper-slide">
               <div class="c-img pt-[111%] before:absolute before:inset-0 before:bg-black/50 before:z-1">
-                <img
+                <CImage
                   src={`https://placehold.co/600x800/ccc/a0b0c0?text=LuxiArc+Architecture+Design`}
                   alt="Thiết Kế Kiến Trúc"
                 />

@@ -1,11 +1,10 @@
 import rss from "@astrojs/rss"
-import { getCollection } from "astro:content"
 import type { APIContext } from "astro"
+import { getNewsItems } from "@/features/news/services"
+import { getLinkByResource } from "@/utils/routes"
 
 export async function GET(context: APIContext) {
-  const blog = await getCollection("blog", ({ data }) => {
-    return import.meta.env.PROD ? !data.draft : true
-  })
+  const newsItems = await getNewsItems()
 
   return rss({
     // Tiêu đề của Feed RSS
@@ -16,14 +15,11 @@ export async function GET(context: APIContext) {
     // URL trang web (lấy từ cấu hình site trong astro.config.mjs)
     site: context.site,
     // Danh sách bài viết trong RSS
-    items: blog.map((post) => ({
-      title: post.data.title,
-      pubDate: post.data.pubDate,
-      description: post.data.description,
-      customData: post.data.author
-        ? `<author>${post.data.author}</author>`
-        : undefined,
-      link: `/blog/${post.id}/`,
+    items: newsItems.map((item) => ({
+      title: item.name,
+      pubDate: new Date(item.created_at),
+      description: item.short_content || "",
+      link: `${getLinkByResource(item.resource_type, item.slug)}/`,
     })),
     // Cấu hình ngôn ngữ mặc định
     customData: `<language>vi-VN</language>`,

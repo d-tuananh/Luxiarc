@@ -1,0 +1,88 @@
+---
+import CImage from "./CImage.astro"
+import CLink from "./CLink.astro"
+import { getLinkByResource } from "@/utils/routes"
+
+interface SliderItem {
+  name: string
+  img?: string | null | undefined
+  slug: string
+  resource_type?: string | null | undefined
+}
+
+interface Props {
+  items: SliderItem[]
+}
+
+const { items } = Astro.props
+---
+
+<section class="container overflow-hidden">
+  <div class="border-b border-[#9F9F9F] py-8">
+    <div class="swiper item-slider w-full">
+      <div class="swiper-wrapper">
+        {
+          items.map((navItem) => {
+            const href = getLinkByResource(navItem.resource_type, navItem.slug)
+            return (
+              <div class="swiper-slide xs:max-w-[50%] md:max-w-[33.333%] lg:max-w-[25%] xl:max-w-[20%] mr-4">
+                <CLink
+                  href={href}
+                  title={navItem.name}
+                  class="c-img pt-[59%] block mb-2 img__"
+                >
+                  <CImage src={navItem.img || ""} alt={navItem.name} />
+                </CLink>
+                <CLink
+                  href={href}
+                  title={navItem.name}
+                  class="line-clamp-1 text-primary font-semibold hover:text-secondary"
+                >
+                  {navItem.name}
+                </CLink>
+              </div>
+            )
+          })
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import Swiper from "swiper"
+  import "swiper/css"
+
+  var initItemSlider = function () {
+    var sliders = document.querySelectorAll(".item-slider")
+    sliders.forEach((sliderEl) => {
+      if ((sliderEl as any).swiper) return
+
+      new Swiper(sliderEl as HTMLElement, {
+        slidesPerView: 1,
+        spaceBetween: 14,
+        breakpoints: {
+          450: {
+            slidesPerView: 2,
+            spaceBetween: 16,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 16,
+          },
+          992: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+          1200: {
+            slidesPerView: 5,
+            spaceBetween: 20,
+          },
+        },
+      })
+    })
+  }
+
+  document.addEventListener("DOMContentLoaded", initItemSlider)
+  document.addEventListener("astro:page-load", initItemSlider)
+</script>

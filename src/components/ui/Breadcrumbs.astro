@@ -1,6 +1,8 @@
 ---
 import { SITE_URL } from "@/utils/seo"
 import { ChevronRight } from "../svgs/config"
+import { PAGE_SLUGS } from "@/constants/pageSlugs"
+import CLink from "./CLink.astro"
 
 interface BreadcrumbItem {
   name: string
@@ -17,7 +19,8 @@ const { items } = Astro.props
 let breadcrumbs: BreadcrumbItem[] = []
 
 if (items) {
-  breadcrumbs = items
+  const hasHome = items.length > 0 && (items[0].url === "/" || items[0].name.toLowerCase() === "trang chủ")
+  breadcrumbs = hasHome ? items : [{ name: "Trang chủ", url: "/" }, ...items]
 } else {
   // Lấy ra danh sách các segment trong path, ví dụ: "/blog/hello-world" -> ["blog", "hello-world"]
   const pathSegments = Astro.url.pathname
@@ -34,9 +37,12 @@ if (items) {
     name = name.charAt(0).toUpperCase() + name.slice(1)
 
     // Custom hiển thị một số segment đặc biệt
-    if (segment === "blog") name = "Blog"
+    if (segment === "blog" || segment === "tin-tuc") name = "Tin tức"
     if (segment === "about") name = "Giới thiệu"
     if (segment === "contact") name = "Liên hệ"
+    if (segment === PAGE_SLUGS.COSTS || segment === "costs" || segment === "chi-phi" || segment === "bao-gia") name = "Báo giá"
+    if (segment === PAGE_SLUGS.CONTRACTORS || segment === "contractors") name = "Nhà thầu"
+    if (segment === PAGE_SLUGS.SERVICES || segment === "services") name = "Dịch vụ"
 
     // Nếu là phần tử cuối cùng thì không cần link (chỉ hiển thị text)
     const isLast = index === pathSegments.length - 1
@@ -77,9 +83,9 @@ const breadcrumbSchema = {
                 {item.name}
               </span>
             ) : (
-              <a href={item.url} class="hover:text-secondary">
+              <CLink href={item.url || "#"} class="hover:text-secondary">
                 {item.name}
-              </a>
+              </CLink>
             )}
           </li>
         )

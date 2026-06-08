@@ -1,0 +1,18 @@
+---
+import { parseTocAndContent } from "@/utils/toc"
+
+interface Props {
+  title: string
+  content: string | null | undefined
+}
+
+const { title, content: rawContent } = Astro.props
+
+const { tocHtml, content } = parseTocAndContent(rawContent)
+---
+
+<section class="container py-8">
+  <h1 class="title-head mb-5">{title}</h1>
+  {tocHtml && <Fragment set:html={tocHtml} />}
+  <article id="article-content" class="s-content" set:html={content} />
+</section>

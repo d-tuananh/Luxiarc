@@ -1,6 +1,7 @@
 ---
 // HeaderMobileMenu.astro
 import { Menu, Close, ChevronDown } from "@/components/svgs/config"
+import { CLink } from "@/components/ui"
 
 interface Props {
   navItems: {
@@ -56,23 +57,25 @@ const { navItems } = Astro.props
                   <ul class="flex flex-col gap-3.5 pl-4 mt-3 border-l border-white text-white list-none m-0 p-0">
                     {item.submenu.map((sub) => (
                       <li>
-                        <a
+                        <CLink
                           href={sub.href}
+                          activeClass="text-secondary"
                           class="hover:text-secondary transition-colors text-sm uppercase font-medium block"
                         >
                           {sub.title}
-                        </a>
+                        </CLink>
                       </li>
                     ))}
                   </ul>
                 </details>
               ) : (
-                <a
-                  href={item.href}
+                <CLink
+                  href={item.href || "#"}
+                  activeClass="text-secondary"
                   class="text-white hover:text-secondary transition-colors font-semibold text-[1.125rem] uppercase block"
                 >
                   {item.title}
-                </a>
+                </CLink>
               )}
             </li>
           ))

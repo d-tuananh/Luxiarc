@@ -1,0 +1,55 @@
+---
+import type { GetStaticPaths } from "astro"
+import Layout from "@/layouts/Layout.astro"
+import { Breadcrumbs, ItemSlider, PageDetailContent } from "@/components/ui"
+import { getNewsItems, getNewsItemDetail } from "@/features/news"
+import { getLinkByResource, ROUTES } from "@/utils/routes"
+
+export const getStaticPaths = (async () => {
+  const items = await getNewsItems()
+  const paths = await Promise.all(
+    items.map(async (item) => {
+      const detail = await getNewsItemDetail(item.slug)
+      return {
+        params: { slug: item.slug },
+        props: { item: detail || item, allItems: items },
+      }
+    })
+  )
+  return paths
+}) satisfies GetStaticPaths
+
+const { item, allItems } = Astro.props
+
+const seoTitle = item.seo?.title || `${item.name} | LuxiArc`
+const seoDesc = item.seo?.description || item.short_content || ""
+
+const category =
+  item.categories && item.categories.length > 0 ? item.categories[0] : null
+
+const breadcrumbItems: { name: string; url?: string }[] = [
+  { name: "Tin tức", url: ROUTES.NEWS.INDEX },
+]
+if (category) {
+  breadcrumbItems.push({
+    name: category.name,
+    url: getLinkByResource(category.resource_type, category.slug),
+  })
+}
+breadcrumbItems.push({ name: item.name })
+
+// Lọc các bài viết khác để làm bài viết liên quan
+const relatedItems = allItems.filter((i) => i.slug !== item.slug)
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <Breadcrumbs items={breadcrumbItems} />
+
+  {
+    relatedItems.length > 0 && (
+      <ItemSlider items={relatedItems} basePath={ROUTES.NEWS.INDEX} />
+    )
+  }
+
+  <PageDetailContent title={item.name} content={item.content} />
+</Layout>

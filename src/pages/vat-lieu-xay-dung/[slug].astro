@@ -1,0 +1,41 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { Breadcrumbs, ItemSlider, PageDetailContent } from "@/components/ui"
+import { getMaterialsItems, getMaterialsItemDetail } from "@/features/materials"
+import { ROUTES } from "@/utils/routes"
+import { PAGE_SLUGS } from "@/constants/pageSlugs"
+import type { GetStaticPaths } from "astro"
+
+export const getStaticPaths = (async () => {
+  const items = await getMaterialsItems(PAGE_SLUGS.MATERIALS)
+  const paths = await Promise.all(
+    items.map(async (item) => {
+      const detail = await getMaterialsItemDetail(item.slug)
+      return {
+        params: { slug: item.slug },
+        props: { item: detail || item, allItems: items },
+      }
+    })
+  )
+  return paths
+}) satisfies GetStaticPaths
+
+const { item, allItems } = Astro.props
+
+const seoTitle = item.seo.title || `${item.name} | LuxiArc`
+const seoDesc = item.seo.description || item.short_content || ""
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <!-- Breadcrumbs -->
+  <Breadcrumbs
+    items={[
+      { name: "Vật liệu xây dựng", url: ROUTES.MATERIALS.INDEX },
+      { name: item.name },
+    ]}
+  />
+
+  <ItemSlider items={allItems} basePath={ROUTES.MATERIALS.INDEX} />
+
+  <PageDetailContent title={item.name} content={item.content} />
+</Layout>

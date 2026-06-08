@@ -2,7 +2,9 @@
 import "@/styles/css/global.css"
 import Header from "@/components/layout/Header.astro"
 import Footer from "@/components/layout/Footer.astro"
+import FloatingWidgets from "@/components/layout/FloatingWidgets.astro"
 import SEO from "@/components/seo/SEO.astro"
+import { getHomeConfig } from "@/features/home/services"
 
 interface Props {
   title?: string
@@ -29,6 +31,9 @@ const {
   author,
   tags,
 } = Astro.props
+
+const homeConfig = await getHomeConfig()
+const siteConfig = homeConfig?.site || null
 ---
 
 <!doctype html>
@@ -64,10 +69,13 @@ const {
     />
   </head>
   <body class="min-h-screen">
-    <Header />
+    <Header siteConfig={siteConfig} />
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer siteConfig={siteConfig} />
+
+    <!-- Widget nổi tròn cố định góc phải -->
+    <FloatingWidgets />
   </body>
 </html>

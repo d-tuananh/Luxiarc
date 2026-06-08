@@ -1,0 +1,37 @@
+---
+import { CImage } from "@/components/ui"
+import kitchenSketch from "@/styles/images/kitchen_sketch.png"
+import type { AboutConfig } from "@/features/page-statics/types"
+
+interface Props {
+  intro: AboutConfig["intro"]
+}
+
+const { intro } = Astro.props
+---
+
+<section class="py-12 md:py-16 container">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <!-- Left column: Texts -->
+    <div class="lg:col-span-7">
+      <h3
+        class="text-[#836E1E] font-bold text-[1.5rem] lg:text-[2rem] uppercase mb-2"
+      >
+        {intro.badge}
+      </h3>
+      <h2
+        class="text-primary font-bold text-[1.5rem] lg:text-[2rem] mb-6 uppercase"
+      >
+        {intro.title}
+      </h2>
+      <div class="s-content text-[#3F3F3F]">
+        {intro.content}
+      </div>
+    </div>
+
+    <!-- Right column: Image -->
+    <div class="lg:col-span-5 img__contain flex items-center justify-center">
+      <CImage src={intro.image || kitchenSketch.src} alt={intro.title} />
+    </div>
+  </div>
+</section>

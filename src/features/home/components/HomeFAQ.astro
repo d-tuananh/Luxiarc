@@ -24,7 +24,7 @@ const faq = await getFAQs()
             id={`faq-left-content-${index}`}
             class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-oute"
           >
-            <div class="s-content pt-3">{item.content}</div>
+            <div class="s-content pt-3" set:html={item.content} />
           </div>
         </div>
       ))

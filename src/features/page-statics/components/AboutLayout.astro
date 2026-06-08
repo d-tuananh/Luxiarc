@@ -1,0 +1,41 @@
+---
+import type { PageStatic } from "@/features/page-statics/types"
+import { getAboutConfig } from "@/features/page-statics/services"
+import { HomeContact } from "@/features/home/config"
+
+// Import các subcomponents mới chia tách
+import AboutHero from "./about/AboutHero.astro"
+import AboutIntro from "./about/AboutIntro.astro"
+import AboutTrust from "./about/AboutTrust.astro"
+import AboutMission from "./about/AboutMission.astro"
+
+interface Props {
+  page: PageStatic
+}
+
+const { page } = Astro.props
+
+// Tải cấu hình động từ API config/about
+const aboutConfig = await getAboutConfig()
+
+if (!aboutConfig) {
+  return null
+}
+---
+
+<!-- Banner chính -->
+<AboutHero hero={aboutConfig.hero} page={page} />
+
+<!-- Section 1: Giới thiệu & Hình vẽ phác thảo -->
+<AboutIntro intro={aboutConfig.intro} />
+
+<!-- Section 2: Trải nghiệm tin cậy -->
+<AboutTrust trust={aboutConfig.trust} />
+
+<!-- Section 3: Sứ mệnh & Bộ sưu tập dự án -->
+<AboutMission mission={aboutConfig.mission} />
+
+<!-- Form liên hệ ở chân trang -->
+<HomeContact />
+
+<div class="pb-20"></div>

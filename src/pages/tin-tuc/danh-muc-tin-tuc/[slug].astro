@@ -1,0 +1,53 @@
+---
+import type { GetStaticPaths } from "astro"
+import Layout from "@/layouts/Layout.astro"
+import { Breadcrumbs, PageBanner } from "@/components/ui"
+import {
+  getNewsCategories,
+  getNewsItemsByCategory,
+  NewsCategories,
+  NewsGrid,
+} from "@/features/news"
+import { ROUTES } from "@/utils/routes"
+
+export const getStaticPaths = (async () => {
+  const categories = await getNewsCategories()
+  return categories.map((cat) => ({
+    params: { slug: cat.slug },
+    props: { currentCategory: cat, allCategories: categories },
+  }))
+}) satisfies GetStaticPaths
+
+const { currentCategory, allCategories } = Astro.props
+
+const items = await getNewsItemsByCategory(currentCategory.slug)
+
+const seoTitle =
+  currentCategory.seo?.title || `${currentCategory.name} | LuxiArc`
+const seoDesc =
+  currentCategory.seo?.description ||
+  currentCategory.short_content ||
+  currentCategory.name
+const defaultBanner =
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
+const bannerImage = currentCategory.img || defaultBanner
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <PageBanner title={currentCategory.name} image={bannerImage} />
+
+  <Breadcrumbs
+    items={[
+      { name: "Tin tức", url: ROUTES.NEWS.INDEX },
+      { name: currentCategory.name },
+    ]}
+  />
+
+  <section class="container py-12">
+    <NewsCategories
+      categories={allCategories}
+      currentCategorySlug={currentCategory.slug}
+    />
+    <NewsGrid items={items} />
+  </section>
+</Layout>

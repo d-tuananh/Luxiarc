@@ -1,0 +1,43 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { ItemV2, PageBanner, PageContent } from "@/components/ui"
+import { getFinishPageDetails, getFinishItems } from "@/features/finish"
+import { getLinkByResource } from "@/utils/routes"
+import { PAGE_SLUGS } from "@/constants/pageSlugs"
+
+const pageDetails = await getFinishPageDetails(PAGE_SLUGS.FINISH)
+
+if (!pageDetails) {
+  return Astro.redirect("/404")
+}
+
+const items = await getFinishItems(PAGE_SLUGS.FINISH)
+
+const seoTitle = pageDetails.seo?.title || pageDetails.name || ""
+const seoDesc = pageDetails.seo?.description || pageDetails.name || ""
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <!-- Banner -->
+  <PageBanner title={pageDetails.name} image={pageDetails?.banner || ""} />
+
+  <PageContent content={pageDetails?.extras.intro_content} />
+
+  <!-- Items list Section -->
+  {
+    items && items.length > 0 && (
+      <section class="container my-12">
+        <div class="bg-[#FAFAFA] p-4 lg:px-8 md:p-6 space-y-6">
+          {items.map((item) => (
+            <ItemV2
+              title={item.name}
+              image={item.img}
+              description={item.short_content || ""}
+              href={getLinkByResource(item.resource_type, item.slug)}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</Layout>

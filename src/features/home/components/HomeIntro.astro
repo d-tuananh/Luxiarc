@@ -1,5 +1,6 @@
 ---
 import { getHomeConfig } from "../services"
+import { CImage, CLink } from "@/components/ui"
 
 const homeConfig = await getHomeConfig()
 const about = homeConfig?.home.about
@@ -8,17 +9,15 @@ const about = homeConfig?.home.about
 <section class="overflow-hidden mt-10 -mb-10">
   <div class="container flex flex-wrap">
     <div class="w-full lg:w-1/2 self-center pb-15">
-      <h2 class="title-head mb-4">{about?.title || "Giới thiệu"}</h2>
-      <div class="s-content mb-4">
-        {about?.content || "Tại LuxiArc, chúng tôi không chỉ xây dựng những ngôi nhà, mà chúng tôi kiến tạo nên tổ ấm bền vững. Với đội ngũ kiến trúc sư tâm huyết và kỹ sư giàu kinh nghiệm, chúng tôi mang đến giải pháp toàn diện từ khâu lên ý tưởng thiết kế đến thi công hoàn thiện chìa khóa trao tay."}
-      </div>
-      <a href={about?.button.link || "/gioi-thieu"} class="btn">
-        {about?.button.text || "Về chúng tôi"}
-      </a>
+      <h2 class="title-head mb-4">{about?.title}</h2>
+      <div class="s-content mb-4" set:html={about?.content} />
+      <CLink href={about?.button.link || "#"} class="btn">
+        {about?.button.text}
+      </CLink>
     </div>
     <div class="w-full lg:w-1/2">
       <div class="img__contain w-full lg:w-[50vw] max-w-240">
-        <img src={about?.image || "src/styles/images/image1.png"} alt="" />
+        <CImage src={about?.image} alt="" />
       </div>
     </div>
   </div>

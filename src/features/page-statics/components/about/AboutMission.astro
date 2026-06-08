@@ -1,0 +1,29 @@
+---
+import { CImage } from "@/components/ui"
+import type { AboutConfig } from "@/features/page-statics/types"
+
+interface Props {
+  mission: AboutConfig["mission"]
+}
+
+const { mission } = Astro.props
+---
+
+<section class="py-12 md:py-16 container">
+  <h2 class="title-head mb-4 text-center">{mission.title}</h2>
+  <div class="s-content mb-14 text-[#3F3F3F]">
+    {mission.content}
+  </div>
+
+  {
+    mission.gallery && mission.gallery.length > 0 && (
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+        {mission.gallery.map((item) => (
+          <div class="c-img pt-[82%] rounded overflow-hidden shadow-sm border border-[#EBEBEB] hover:shadow-md hover:border-secondary transition-all duration-300">
+            <CImage src={item.image} alt={item.title || mission.title} />
+          </div>
+        ))}
+      </div>
+    )
+  }
+</section>

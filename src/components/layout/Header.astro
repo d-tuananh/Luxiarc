@@ -3,42 +3,50 @@ import HeaderLogo from "./header/HeaderLogo.astro"
 import HeaderNav from "./header/HeaderNav.astro"
 import HeaderPhone from "./header/HeaderPhone.astro"
 import HeaderMobileMenu from "./header/HeaderMobileMenu.astro"
+import { PAGE_SLUGS } from "@/constants/pageSlugs"
+import type { HomeConfig } from "@/features/home/types"
+
+interface Props {
+  siteConfig?: HomeConfig["site"] | null
+}
+
+const { siteConfig } = Astro.props
 
 const navItems = [
-  { title: "Giới thiệu", href: "/about" },
+  { title: "Giới thiệu", href: `/ve-chung-toi` },
   {
     title: "Tư Vấn & Pháp Lý",
     submenu: [
-      { title: "Quy trình làm việc", href: "#" },
-      { title: "Hình thức thanh toán", href: "#" },
-      { title: "Thủ tục pháp lý & Cấp phép", href: "#" },
+      { title: "Tìm Hiểu Trước Khi Xây", href: `/${PAGE_SLUGS.KNOWLEDGE}` },
+      { title: "Thủ Tục Pháp Lý", href: "/thu-tuc-phap-ly" },
+      { title: "Chi Phí & Báo Giá", href: `/${PAGE_SLUGS.COSTS}` },
     ],
   },
   {
     title: "Thiết Kế & Thi Công",
     submenu: [
-      { title: "Thiết kế kiến trúc", href: "#" },
-      { title: "Thiết kế nội thất", href: "#" },
-      { title: "Thi công trọn gói", href: "#" },
+      { title: "Thiết kế kiến trúc", href: `/${PAGE_SLUGS.CONTRACTORS}` },
+      { title: "Thi công phần thô", href: `/${PAGE_SLUGS.CONSTRUCTION}` },
+      { title: "Thi công hoàn thiện", href: `/${PAGE_SLUGS.FINISH}` },
+      { title: "Gói Dịch Vụ Trọn Gói", href: `/${PAGE_SLUGS.SERVICES}` },
     ],
   },
   {
     title: "Kỹ Thuật & Vật Tư",
     submenu: [
-      { title: "Tiêu chuẩn kỹ thuật", href: "#" },
-      { title: "Vật liệu hoàn thiện", href: "#" },
-      { title: "Nhà máy sản xuất", href: "#" },
+      { title: "Vật liệu xây dựng", href: `/${PAGE_SLUGS.MATERIALS}` },
+      { title: "Hệ thống kỹ thuật", href: "/he-thong-ky-thuat" },
+      { title: "Kiểm tra & Nghiệm thu", href: `/${PAGE_SLUGS.ACCEPTANCE}` },
     ],
   },
   {
     title: "Hậu Mãi",
     submenu: [
-      { title: "Chính sách bảo hành", href: "#" },
-      { title: "Kiểm tra bảo hành sản phẩm", href: "#" },
-      { title: "Bảo dưỡng định kỳ", href: "#" },
+      { title: "Nội thất sau xây", href: `/${PAGE_SLUGS.INTERIOR}` },
+      { title: "Bảo trì & Sửa chữa", href: `/${PAGE_SLUGS.MAINTENANCE}` },
     ],
   },
-  { title: "Liên hệ", href: "/contact" },
+  { title: "Liên hệ", href: "/lien-he" },
 ]
 ---
 
@@ -47,14 +55,14 @@ const navItems = [
 >
   <div class="container flex gap-5 h-17.75">
     <!-- Logo block -->
-    <HeaderLogo />
+    <HeaderLogo logo={siteConfig?.logo} />
 
     <!-- Navigation block -->
     <HeaderNav navItems={navItems} />
 
     <!-- Right actions block (Phone & Mobile menu toggle) -->
     <div class="flex items-center gap-4">
-      <HeaderPhone />
+      <HeaderPhone hotline={siteConfig?.hotline} />
       <HeaderMobileMenu navItems={navItems} />
     </div>
   </div>

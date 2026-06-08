@@ -1,6 +1,7 @@
 ---
 import { Quote } from "@/components/svgs/config"
 import { cn } from "@/utils/cn"
+import { CImage } from "@/components/ui"
 
 interface Props {
   avatar: string
@@ -20,7 +21,7 @@ const { avatar, name, text, class: className } = Astro.props
   <div>
     <div class="flex items-center gap-3 mb-6">
       <div class="size-14 rounded-full c-img shrink-0 overflow-hidden">
-        <img src={avatar} alt={name} />
+        <CImage src={avatar} alt={name} />
       </div>
       <span class="text-[1.25rem] font-medium text-[#00335D]">
         {name}

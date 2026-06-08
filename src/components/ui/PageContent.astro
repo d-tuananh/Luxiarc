@@ -1,0 +1,15 @@
+---
+interface Props {
+  content: string | null | undefined
+}
+
+const { content } = Astro.props
+---
+
+{
+  content && (
+    <section class="my-10 container">
+      <div class="s-content" set:html={content} />
+    </section>
+  )
+}

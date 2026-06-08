@@ -30,6 +30,10 @@
   @apply block w-fit py-3 px-4 text-white bg-secondary hover:bg-primary font-bold cursor-pointer;
 }
 
+@utility btn-floating {
+  @apply flex text-[#3F3F3F] flex-col items-center justify-center size-16 rounded-full border border-white bg-[linear-gradient(270deg,rgba(255,255,255,0.8)_0%,rgba(152,152,152,0.8)_26.36%,rgba(242,242,242,0.8)_51.66%,rgba(221,221,221,0.8)_70.96%,rgba(135,135,135,0.8)_100%)] shadow-[inset_0_2px_4px_rgba(0,0,0,0.7),0_0_5px_rgba(255,255,255,0.3)] backdrop-blur-[3.5px] text-center p-2 transition-all duration-300 hover:scale-105 hover:bg-[linear-gradient(270deg,rgba(223,201,118,0.95)_0%,rgba(180,158,80,0.95)_26.36%,rgba(245,228,160,0.95)_51.66%,rgba(223,201,118,0.95)_70.96%,rgba(150,130,60,0.95)_100%)] hover:border-secondary hover:text-primary;
+}
+
 @media (max-width: 576px) {
   .max-lg\:container,
   .container {

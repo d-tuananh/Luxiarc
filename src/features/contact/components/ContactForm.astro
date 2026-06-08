@@ -1,5 +1,9 @@
 ---
+interface Props {
+  buttonText?: string
+}
 
+const { buttonText = "Gửi thông tin" } = Astro.props
 ---
 
 <form
@@ -57,7 +61,7 @@
     class="block w-full py-2 border-b border-[#9F9F9F] resize-none"></textarea>
 
   <!-- Nút submit -->
-  <button type="submit" class="btn"> Gửi thông tin </button>
+  <button type="submit" class="btn"> {buttonText} </button>
 </form>
 
 <script>

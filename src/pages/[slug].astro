@@ -1,0 +1,46 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import {
+  getPageStaticsList,
+  getPageStaticDetail,
+  AboutLayout,
+  ContactLayout,
+  NormalLayout,
+} from "@/features/page-statics"
+import type { GetStaticPaths } from "astro"
+
+export const getStaticPaths = (async () => {
+  const apiPages = await getPageStaticsList()
+  return apiPages.map((page) => ({
+    params: { slug: page.slug },
+  }))
+}) satisfies GetStaticPaths
+
+const { slug } = Astro.params
+
+const pageDetails = await getPageStaticDetail(slug)
+
+if (!pageDetails) {
+  return Astro.redirect("/404")
+}
+
+const seoTitle = pageDetails.seo?.title || `${pageDetails.name} | LuxiArc`
+const seoDesc = pageDetails.seo?.description || pageDetails.short_content || ""
+
+const layoutShow = pageDetails.layout_show
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  {
+    (() => {
+      switch (layoutShow) {
+        case "about":
+          return <AboutLayout page={pageDetails} />
+        case "contact":
+          return <ContactLayout page={pageDetails} />
+        default:
+          return <NormalLayout page={pageDetails} />
+      }
+    })()
+  }
+</Layout>

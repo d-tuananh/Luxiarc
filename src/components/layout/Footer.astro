@@ -2,6 +2,13 @@
 import FooterInfo from "./footer/FooterInfo.astro"
 import FooterLinks from "./footer/FooterLinks.astro"
 import FooterCopyright from "./footer/FooterCopyright.astro"
+import type { HomeConfig } from "@/features/home/types"
+
+interface Props {
+  siteConfig?: HomeConfig["site"] | null
+}
+
+const { siteConfig } = Astro.props
 
 const linksList = [
   "Quy trình làm việc",
@@ -22,7 +29,7 @@ const linksList = [
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12"
     >
       <!-- Cột 1: Thông tin công ty & liên hệ -->
-      <FooterInfo />
+      <FooterInfo siteConfig={siteConfig} />
 
       <!-- Cột 2: Liên kết 1 -->
       <FooterLinks title="LIÊN KẾT" links={linksList} />
@@ -36,5 +43,5 @@ const linksList = [
   </div>
 
   <!-- Gold Gradient Copyright Bar -->
-  <FooterCopyright />
+  <FooterCopyright copyright={siteConfig?.copyright} />
 </footer>

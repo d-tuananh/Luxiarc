@@ -1,0 +1,37 @@
+---
+import { cn } from "@/utils/cn"
+import CImage from "./CImage.astro"
+
+import type { ImageMetadata } from "astro"
+
+interface Props {
+  content: string | null | undefined
+  image: string | ImageMetadata | null | undefined
+  alt?: string
+}
+
+const { content, image, alt = "" } = Astro.props
+---
+
+<section class="my-12 container">
+  <div
+    class={cn("grid", "grid-cols-1", image ? "md:grid-cols-2" : "", "gap-6")}
+  >
+    <!-- Left: Text descriptions (HTML from API) -->
+    <div class="col-span-1">
+      <div
+        class="s-content text-main text-justify text-[0.95rem] leading-relaxed"
+        set:html={content}
+      />
+    </div>
+
+    <!-- Right: Image -->
+    {
+      image && (
+        <div class="col-span-1 img__contain">
+          <CImage src={image} alt={alt} />
+        </div>
+      )
+    }
+  </div>
+</section>

@@ -1,19 +1,37 @@
 ---
 import Facebook from "@/components/svgs/facebook.astro"
 import Youtube from "@/components/svgs/youtube.astro"
+import type { HomeConfig } from "@/features/home/types"
+import { CImage } from "@/components/ui"
 
-// FooterInfo.astro
+interface Props {
+  siteConfig?: HomeConfig["site"] | null
+}
+
+const { siteConfig } = Astro.props
+
+const name = siteConfig?.name || ""
+const logo = siteConfig?.logo_footer || ""
+const hotline = siteConfig?.hotline || ""
+const email = siteConfig?.email || ""
+const address = siteConfig?.address || ""
+
+const formattedHotline = hotline.replace(/(\d{4})(\d{3})(\d{3})/, "$1.$2.$3")
+const cleanHotline = hotline.replace(/\D/g, "")
+
+const facebookUrl = siteConfig?.socials?.facebook || "#"
+const youtubeUrl = siteConfig?.socials?.youtube || "#"
 ---
 
 <div class="col-span-2">
   <div class="flex items-center gap-3.5 mb-6">
     <span class="h-13 shrink-0 img__contain block img__h-full">
-      <img src="/src/styles/images/logo.png" alt="LuxiArc Logo" />
+      <CImage src={logo} fallback="/src/styles/images/logo.png" alt="LuxiArc Logo" />
     </span>
     <span
       class="bg-[linear-gradient(180deg,#DFC976_0%,#A37A48_19.71%,#DFC976_46.15%,#A37A48_76.92%,#DFC976_100%)] text-transparent bg-clip-text text-[1.5rem] font-bold uppercase"
     >
-      CÔNG TY LUXIARC
+      {name}
     </span>
   </div>
 
@@ -21,25 +39,25 @@ import Youtube from "@/components/svgs/youtube.astro"
     <p>
       Hotline:
       <a
-        href="tel:+8412346789"
+        href={`tel:${cleanHotline}`}
         class="text-white font-semibold ml-1 hover:text-secondary"
       >
-        012346789
+        {formattedHotline}
       </a>
     </p>
     <p>
       Email:
       <a
-        href="mailto:luxiarc@gmail.com"
+        href={`mailto:${email}`}
         class="text-white font-semibold ml-1 hover:text-secondary"
       >
-        luxiarc@gmail.com
+        {email}
       </a>
     </p>
     <p>
       Địa chỉ:
       <strong class="text-white font-semibold ml-1 hover:text-secondary"
-        >Số 183 Cầu Giấy - Thanh Xuân - Hà Nội</strong
+        >{address}</strong
       >
     </p>
   </div>
@@ -47,14 +65,14 @@ import Youtube from "@/components/svgs/youtube.astro"
   <!-- Social Media Buttons -->
   <div class="flex items-center gap-3">
     <a
-      href="#"
+      href={facebookUrl}
       class="size-7 text-white hover:text-secondary"
       aria-label="Facebook"
     >
       <Facebook />
     </a>
     <a
-      href="#"
+      href={youtubeUrl}
       class="size-7 text-white hover:text-secondary"
       aria-label="YouTube"
     >

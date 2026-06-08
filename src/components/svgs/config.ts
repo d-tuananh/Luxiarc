@@ -17,6 +17,10 @@ import Experts from "@/components/svgs/experts.astro"
 import Pricing from "@/components/svgs/pricing.astro"
 import Office from "@/components/svgs/office.astro"
 import Mail from "@/components/svgs/mail.astro"
+import SelfDesign from "@/components/svgs/self-design.astro"
+import VR360 from "@/components/svgs/vr360.astro"
+import Compare from "@/components/svgs/compare.astro"
+import Zalo from "@/components/svgs/zalo.astro"
 
 // Tập trung export các icon SVG để import tiện lợi từ một nơi
 export {
@@ -39,5 +43,9 @@ export {
   Pricing,
   Office,
   Mail,
+  SelfDesign,
+  VR360,
+  Compare,
+  Zalo,
 }
 

@@ -1,0 +1,26 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { Breadcrumbs, PageBanner } from "@/components/ui"
+import { getNewsCategories, getNewsItems, NewsCategories, NewsGrid } from "@/features/news"
+
+const [categories, items] = await Promise.all([
+  getNewsCategories(),
+  getNewsItems(),
+])
+
+const seoTitle = "Tin tức & Cẩm nang thiết kế | LuxiArc"
+const seoDesc =
+  "Cập nhật các cẩm nang xây dựng, kinh nghiệm thi công nội thất và xu hướng thiết kế mới nhất từ kiến trúc sư LuxiArc."
+const defaultBanner =
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <Breadcrumbs />
+  <PageBanner title="Tin tức" image={defaultBanner} />
+
+  <section class="container py-12">
+    <NewsCategories categories={categories} />
+    <NewsGrid items={items} />
+  </section>
+</Layout>

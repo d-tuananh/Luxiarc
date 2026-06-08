@@ -61,3 +61,32 @@ export interface DeviceInfo {
   source: string
 }
 
+/**
+ * Danh sách toàn bộ các loại tài nguyên (Resource Types) từ hệ thống API
+ */
+export type ResourceType =
+  | "news"
+  | "news_categories"
+  | "service_items"
+  | "service_pages"
+  | "cost_items"
+  | "cost_pages"
+  | "knowledge_items"
+  | "knowledge_pages"
+  | "contractor_items"
+  | "contractor_pages"
+  | "maintenance_items"
+  | "maintenance_pages"
+  | "page_statics"
+  | "finish_items"
+  | "finish_pages"
+  | "acceptance_items"
+  | "acceptance_pages"
+  | "interior_items"
+  | "interior_pages"
+  | "construction_items"
+  | "construction_pages"
+  | "materials_items"
+  | "materials_pages"
+
+

@@ -1,6 +1,7 @@
 ---
 import { Phone, Box, Wrench } from "@/components/svgs/config"
 import { getBanners, getHomeConfig } from "../services"
+import { CImage, CLink } from "@/components/ui"
 
 const banners = await getBanners()
 const homeConfig = await getHomeConfig()
@@ -15,9 +16,9 @@ const iconMap = [Phone, Box, Wrench]
       {
         banners.map((item) => (
           <div class="swiper-slide">
-            <a href={item.link || "#"} class="img__contain block">
-              <img src={item.image} alt={item.title} />
-            </a>
+            <CLink href={item.link || "#"} class="c-img h-[80dvh]">
+              <CImage src={item.image} alt={item.title} />
+            </CLink>
           </div>
         ))
       }
@@ -37,15 +38,11 @@ const iconMap = [Phone, Box, Wrench]
                 <div class="w-full max-lg:h-px lg:w-px bg-white/10 mx-auto shrink-0" />
               )}
               <div class="flex gap-3 items-center max-lg:px-2">
-                <div
-                  class="size-11 rounded-full border-2 border-secondary bg-white/10 flex items-center justify-center shrink-0"
-                >
+                <div class="size-11 rounded-full border-2 border-secondary bg-white/10 flex items-center justify-center shrink-0">
                   <Icon class="text-secondary w-5 h-5" />
                 </div>
                 <div class="flex-1 text-white">
-                  <p
-                    class="text-base lg:text-[1.125rem] font-bold uppercase tracking-wide"
-                  >
+                  <p class="text-base lg:text-[1.125rem] font-bold uppercase tracking-wide">
                     {benefit.title}
                   </p>
                   <p class="text-xs text-white/80 mt-0.5">

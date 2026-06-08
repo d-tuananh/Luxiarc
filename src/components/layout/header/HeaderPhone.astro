@@ -1,11 +1,24 @@
 ---
 import { Phone } from "@/components/svgs/config"
+
+interface Props {
+  hotline?: string
+}
+const { hotline } = Astro.props
+
+// Định dạng hiển thị: 0989.84.6666
+const phoneDisplay = hotline
+  ? hotline.replace(/(\d{4})(\d{3})(\d{3})/, "$1.$2.$3")
+  : ""
+
+// Link tel:0989846666
+const phoneLink = hotline ? hotline.replace(/\D/g, "") : ""
 ---
 
 <a
-  href="tel:0989846666"
+  href={`tel:${phoneLink}`}
   class="flex items-center gap-1 py-2 ml-5 text-white font-bold px-4 bg-secondary hover:bg-secondary/90 shrink-0"
 >
   <Phone class="size-5 shrink-0" />
-  <span>0989.84.6666</span>
+  <span>{phoneDisplay}</span>
 </a>
