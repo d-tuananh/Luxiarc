@@ -3,24 +3,27 @@ import Layout from "@/layouts/Layout.astro"
 import { Breadcrumbs, CLink } from "@/components/ui"
 ---
 
-<Layout title="404 - Không tìm thấy trang | LuxiArc" description="Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.">
-  <!-- Breadcrumbs -->
-  <Breadcrumbs
-    items={[
-      { name: "404 - Không tìm thấy trang" },
-    ]}
-  />
+<Layout
+  title="404 - Không tìm thấy trang | LuxiArc"
+  description="Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển."
+>
+  <Breadcrumbs items={[{ name: "404 - Không tìm thấy trang" }]} />
 
-  <!-- 404 Visual Content -->
-  <section class="min-h-[60vh] flex items-center justify-center bg-white py-16 px-4">
+  <section
+    class="min-h-[60vh] flex items-center justify-center bg-white py-16 px-4"
+  >
     <div class="max-w-xl w-full text-center flex flex-col items-center">
       <!-- Premium Stylized 404 Vibe -->
       <div class="relative mb-6">
-        <h1 class="text-[8rem] sm:text-[10rem] font-bold text-primary leading-none font-oswald select-none opacity-10">
+        <h1
+          class="text-[8rem] sm:text-[10rem] font-bold text-primary leading-none font-oswald select-none opacity-10"
+        >
           404
         </h1>
         <div class="absolute inset-0 flex items-center justify-center">
-          <span class="text-3xl sm:text-4xl font-extrabold text-secondary tracking-widest uppercase bg-white px-4">
+          <span
+            class="text-3xl sm:text-4xl font-extrabold text-secondary tracking-widest uppercase bg-white px-4"
+          >
             Lỗi
           </span>
         </div>
@@ -30,21 +33,32 @@ import { Breadcrumbs, CLink } from "@/components/ui"
       <div class="w-16 h-1 bg-secondary mb-8 rounded-full"></div>
 
       <!-- Heading -->
-      <h2 class="text-2xl sm:text-3xl font-bold text-primary uppercase tracking-wide mb-4 font-oswald">
+      <h2
+        class="text-2xl sm:text-3xl font-bold text-primary uppercase tracking-wide mb-4 font-oswald"
+      >
         Trang Không Tồn Tại
       </h2>
 
       <!-- Description -->
       <p class="text-main leading-relaxed mb-10 text-[0.95rem] max-w-md">
-        Đường dẫn bạn yêu cầu không tồn tại, đã bị xóa hoặc đã được chuyển sang một địa chỉ khác. Vui lòng kiểm tra lại URL hoặc trở về trang chủ.
+        Đường dẫn bạn yêu cầu không tồn tại, đã bị xóa hoặc đã được chuyển sang
+        một địa chỉ khác. Vui lòng kiểm tra lại URL hoặc trở về trang chủ.
       </p>
 
       <!-- CTA buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 items-center justify-center w-full">
-        <CLink href="/" class="btn w-full sm:w-auto text-center px-8 py-3.5 transition-all duration-300">
+      <div
+        class="flex flex-col sm:flex-row gap-4 items-center justify-center w-full"
+      >
+        <CLink
+          href="/"
+          class="btn w-full sm:w-auto text-center px-8 py-3.5 transition-all duration-300"
+        >
           Về Trang Chủ
         </CLink>
-        <CLink href="/contact" class="inline-block w-full sm:w-auto text-center border border-primary text-primary hover:bg-primary hover:text-white font-bold py-3 px-8 transition-all duration-300">
+        <CLink
+          href="/lien-he"
+          class="inline-block w-full sm:w-auto text-center border border-primary text-primary hover:bg-primary hover:text-white font-bold py-3 px-8 transition-all duration-300"
+        >
           Liên Hệ Hỗ Trợ
         </CLink>
       </div>
