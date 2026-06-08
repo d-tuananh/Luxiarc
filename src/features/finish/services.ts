@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
 import { PAGE_SLUGS } from "@/constants/pageSlugs"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { FinishPage, FinishItem } from "./types"
 
 interface PageResponseData {
@@ -45,7 +45,8 @@ export async function getFinishPageDetails(
  * Lấy danh sách các bài viết con thuộc trang Hoàn thiện từ API
  */
 export async function getFinishItems(
-  pageSlug: string = PAGE_SLUGS.FINISH
+  pageSlug: string = PAGE_SLUGS.FINISH,
+  params?: ListQueryParams
 ): Promise<FinishItem[]> {
   try {
     const response = await api.get<ApiResponse<ItemsResponseData>>(
@@ -55,6 +56,7 @@ export async function getFinishItems(
           act: 1,
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

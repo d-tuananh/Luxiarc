@@ -22,7 +22,7 @@ export const API_ROUTES = {
     DETAIL: (slug: string) => `/news/items/${slug}`,
   },
   CONTACT: {
-    SUBMIT: "/contact",
+    SUBMIT: "/contact-submissions",
   },
   COSTS: {
     PAGE: (pageSlug: string) => `/costs/pages/${pageSlug}`,

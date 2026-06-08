@@ -8,8 +8,8 @@ const { content } = Astro.props
 
 {
   content && (
-    <section class="my-10 container">
-      <div class="s-content" set:html={content} />
+    <section class="my-10 container overflow-hidden">
+      <div class="s-content" set:html={content} data-aos="fade-up" />
     </section>
   )
 }

@@ -89,4 +89,19 @@ export type ResourceType =
   | "materials_items"
   | "materials_pages"
 
-
+/**
+ * Tham số truy vấn danh sách (List Query Parameters)
+ * @note: Các tham số này tuân theo chuẩn của API backend
+ */
+export interface ListQueryParams {
+  page?: number
+  per_page?: number
+  q?: string
+  ids?: string
+  slug?: string
+  act?: number
+  include_inactive?: boolean
+  sort_by?: string
+  sort_dir?: "asc" | "desc"
+  limit?: number
+}

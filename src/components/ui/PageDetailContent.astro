@@ -11,8 +11,8 @@ const { title, content: rawContent } = Astro.props
 const { tocHtml, content } = parseTocAndContent(rawContent)
 ---
 
-<section class="container py-8">
-  <h1 class="title-head mb-5">{title}</h1>
+<section class="container py-8 overflow-hidden">
+  <h1 class="title-head mb-5" data-aos="fade-up">{title}</h1>
   {tocHtml && <Fragment set:html={tocHtml} />}
-  <article id="article-content" class="s-content" set:html={content} />
+  <article id="article-content" class="s-content" set:html={content} data-aos="fade-up" />
 </section>

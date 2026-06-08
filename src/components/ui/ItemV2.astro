@@ -15,16 +15,19 @@ interface Props {
 const { title, description, image, href, reverse = false } = Astro.props
 ---
 
-<div class="flex flex-wrap gap-4 md:gap-6 xl:gap-8">
+<div class="flex flex-wrap gap-4 md:gap-6 xl:gap-8 overflow-hidden">
   {/* Left: Image */}
-  <div class={cn("w-full md:w-[min(45%,602px)]", reverse && "md:order-1")}>
+  <div
+    class={cn("w-full md:w-[min(45%,602px)]", reverse && "md:order-1")}
+    data-aos={reverse ? "fade-left" : "fade-right"}
+  >
     <CLink href={href} class="pt-[47%] h-full c-img">
       <CImage src={image} alt={title} />
     </CLink>
   </div>
 
   {/* Right: Content */}
-  <div class="flex-1 space-y-3">
+  <div class="flex-1 space-y-3" data-aos={reverse ? "fade-right" : "fade-left"}>
     <h3 class="title-head">
       {title}
     </h3>

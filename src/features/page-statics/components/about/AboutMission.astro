@@ -9,17 +9,21 @@ interface Props {
 const { mission } = Astro.props
 ---
 
-<section class="py-12 md:py-16 container">
-  <h2 class="title-head mb-4 text-center">{mission.title}</h2>
-  <div class="s-content mb-14 text-[#3F3F3F]">
+<section class="py-12 md:py-16 container overflow-hidden">
+  <h2 class="title-head mb-4 text-center" data-aos="fade-up">{mission.title}</h2>
+  <div class="s-content mb-14 text-[#3F3F3F]" data-aos="fade-up">
     {mission.content}
   </div>
 
   {
     mission.gallery && mission.gallery.length > 0 && (
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-        {mission.gallery.map((item) => (
-          <div class="c-img pt-[82%] rounded overflow-hidden shadow-sm border border-[#EBEBEB] hover:shadow-md hover:border-secondary transition-all duration-300">
+        {mission.gallery.map((item, index) => (
+          <div
+            class="c-img pt-[82%] rounded overflow-hidden shadow-sm border border-[#EBEBEB] hover:shadow-md hover:border-secondary transition-all duration-300"
+            data-aos="fade-up"
+            data-aos-delay={index * 100}
+          >
             <CImage src={item.image} alt={item.title || mission.title} />
           </div>
         ))}

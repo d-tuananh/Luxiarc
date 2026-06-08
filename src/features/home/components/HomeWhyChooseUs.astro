@@ -7,12 +7,16 @@ const items = await getWhyChooseUsItems()
 ---
 
 <section class="py-8 container">
-  <h2 class="title-head mb-8 text-center">Tại sao chọn chúng tôi?</h2>
+  <h2 class="title-head mb-8 text-center" data-aos="fade-up">Tại sao chọn chúng tôi?</h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
     {
-      items.map((item) => (
-        <div class="bg-[radial-gradient(50%_50%_at_50%_50%,#485760_0%,#1D2F3A_100%)] border border-[#5D5D5D] py-6 px-5 text-white text-center">
+      items.map((item, index) => (
+        <div 
+          class="bg-[radial-gradient(50%_50%_at_50%_50%,#485760_0%,#1D2F3A_100%)] border border-[#5D5D5D] py-6 px-5 text-white text-center"
+          data-aos="fade-up"
+          data-aos-delay={index * 100}
+        >
           <div class="size-18 mx-auto rounded-full flex items-center justify-center overflow-hidden bg-secondary border border-white p-4 img__contain img__h-full mb-4">
             <CImage src={item.icon} alt={item.title} />
           </div>

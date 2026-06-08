@@ -19,20 +19,23 @@ if (!contactConfig) {
 ---
 
 <Breadcrumbs items={[{ name: page.name }]} />
-<section class="relative">
+<section class="relative overflow-hidden">
   <div class="grid container py-12 grid-cols-1 lg:grid-cols-2 gap-10 lg:pb-50">
-    <div>
+    <div data-aos="fade-right">
       <ContactInfo contactConfig={contactConfig} page={page} />
     </div>
 
-    <div>
+    <div data-aos="fade-left">
       <ContactForm buttonText={contactConfig.form.button_text} />
     </div>
   </div>
 
   {
     contactConfig?.media?.image && (
-      <div class="lg:absolute lg:-z-1 lg:bottom-0 lg:left-0 lg:h-[65%] w-fit pointer-events-none img__contain img__h-full">
+      <div
+        class="lg:absolute lg:-z-1 lg:bottom-0 lg:left-0 lg:h-[65%] w-fit pointer-events-none img__contain img__h-full"
+        data-aos="fade-up"
+      >
         <CImage src={contactConfig.media.image} alt={page.name} />
       </div>
     )

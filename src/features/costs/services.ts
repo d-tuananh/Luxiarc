@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
 import { PAGE_SLUGS } from "@/constants/pageSlugs"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { CostsPage, CostsItem } from "./types"
 
 interface PageResponseData {
@@ -38,7 +38,8 @@ export async function getCostsPageDetails(
  * Lấy danh sách các danh mục báo giá chi tiết của trang Chi phí từ API
  */
 export async function getCostsItems(
-  pageSlug: string = PAGE_SLUGS.COSTS
+  pageSlug: string = PAGE_SLUGS.COSTS,
+  params?: ListQueryParams
 ): Promise<CostsItem[]> {
   try {
     const response = await api.get<ApiResponse<ItemsResponseData>>(
@@ -48,6 +49,7 @@ export async function getCostsItems(
           act: 1, // Chỉ lấy các item đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
 import { PAGE_SLUGS } from "@/constants/pageSlugs"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { ContractorsPage, ContractorsItem } from "./types"
 
 interface PageResponseData {
@@ -48,7 +48,8 @@ export async function getContractorsPageDetails(
  * Lấy danh sách các bài viết con thuộc trang Nhà thầu từ API
  */
 export async function getContractorsItems(
-  pageSlug: string = PAGE_SLUGS.CONTRACTORS
+  pageSlug: string = PAGE_SLUGS.CONTRACTORS,
+  params?: ListQueryParams
 ): Promise<ContractorsItem[]> {
   try {
     const response = await api.get<ApiResponse<ItemsResponseData>>(
@@ -58,6 +59,7 @@ export async function getContractorsItems(
           act: 1, // Chỉ lấy các bài viết đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

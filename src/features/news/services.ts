@@ -1,6 +1,6 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { NewsCategory, NewsItem } from "./types"
 
 interface NewsCategoriesResponse {
@@ -30,13 +30,16 @@ interface NewsCategoryDetailResponse {
 /**
  * Lấy danh sách toàn bộ danh mục tin tức hoạt động
  */
-export async function getNewsCategories(): Promise<NewsCategory[]> {
+export async function getNewsCategories(
+  params?: ListQueryParams
+): Promise<NewsCategory[]> {
   try {
     const response = await api.get<ApiResponse<NewsCategoriesResponse>>(
       API_ROUTES.NEWS.CATEGORIES,
       {
         params: {
           act: 1,
+          ...params,
         },
       }
     )
@@ -59,7 +62,10 @@ export async function getNewsCategoryDetail(
     )
     return response.data.item || null
   } catch (error) {
-    console.error(`Lỗi khi tải chi tiết danh mục tin tức ${categorySlug}:`, error)
+    console.error(
+      `Lỗi khi tải chi tiết danh mục tin tức ${categorySlug}:`,
+      error
+    )
     return null
   }
 }
@@ -68,11 +74,18 @@ export async function getNewsCategoryDetail(
  * Lấy danh sách bài viết thuộc một danh mục tin tức theo slug
  */
 export async function getNewsItemsByCategory(
-  categorySlug: string
+  categorySlug: string,
+  params?: ListQueryParams
 ): Promise<NewsItem[]> {
   try {
     const response = await api.get<ApiResponse<NewsItemsResponse>>(
-      API_ROUTES.NEWS.CATEGORY_ITEMS(categorySlug)
+      API_ROUTES.NEWS.CATEGORY_ITEMS(categorySlug),
+      {
+        params: {
+          act: 1,
+          ...params,
+        },
+      }
     )
     return response.data.items || []
   } catch (error) {
@@ -84,12 +97,12 @@ export async function getNewsItemsByCategory(
 /**
  * Lấy danh sách toàn bộ bài viết hoạt động
  */
-export async function getNewsItems(params?: {
-  act?: number
-  hot?: number
-  home?: number
-  limit?: number
-}): Promise<NewsItem[]> {
+export async function getNewsItems(
+  params?: ListQueryParams & {
+    hot?: number
+    home?: number
+  }
+): Promise<NewsItem[]> {
   try {
     const response = await api.get<ApiResponse<NewsItemsResponse>>(
       API_ROUTES.NEWS.ITEMS,

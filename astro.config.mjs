@@ -6,7 +6,11 @@ import sitemap from "@astrojs/sitemap"
 // https://astro.build/config
 export default defineConfig({
   site: "https://luxiarc.vn",
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.endsWith("/404") && !page.endsWith("/404/"),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

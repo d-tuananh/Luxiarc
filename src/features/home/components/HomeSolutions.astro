@@ -9,7 +9,7 @@ import { CImage } from "@/components/ui"
     class="grid grid-cols-1 lg:grid-cols-[1fr_2.2fr] gap-10 lg:gap-16 items-center"
   >
     <!-- Cột trái: Tiêu đề & Mô tả -->
-    <div>
+    <div data-aos="fade-right">
       <h2 class="title-head mb-4">Giải pháp xây dựng toàn diện</h2>
       <div class="s-content mb-6">
         <p>
@@ -41,7 +41,7 @@ import { CImage } from "@/components/ui"
     </div>
 
     <!-- Cột phải: Slider Swiper -->
-    <div class="swiper home-solutions-slider w-full overflow-visible">
+    <div class="swiper home-solutions-slider w-full overflow-visible" data-aos="fade-left">
       <div class="swiper-wrapper">
         {
           Array.from({ length: 5 }).map((_, _index) => (

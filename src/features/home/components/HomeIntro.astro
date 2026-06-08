@@ -8,14 +8,14 @@ const about = homeConfig?.home.about
 
 <section class="overflow-hidden mt-10 -mb-10">
   <div class="container flex flex-wrap">
-    <div class="w-full lg:w-1/2 self-center pb-15">
+    <div class="w-full lg:w-1/2 self-center pb-15" data-aos="fade-right">
       <h2 class="title-head mb-4">{about?.title}</h2>
       <div class="s-content mb-4" set:html={about?.content} />
       <CLink href={about?.button.link || "#"} class="btn">
         {about?.button.text}
       </CLink>
     </div>
-    <div class="w-full lg:w-1/2">
+    <div class="w-full lg:w-1/2" data-aos="fade-left">
       <div class="img__contain w-full lg:w-[50vw] max-w-240">
         <CImage src={about?.image} alt="" />
       </div>

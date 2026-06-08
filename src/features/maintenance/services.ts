@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
 import { PAGE_SLUGS } from "@/constants/pageSlugs"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { MaintenancePage, MaintenanceItem } from "./types"
 
 interface PageResponseData {
@@ -48,7 +48,8 @@ export async function getMaintenancePageDetails(
  * Lấy danh sách các bài viết thuộc trang Bảo trì từ API
  */
 export async function getMaintenanceItems(
-  pageSlug: string = PAGE_SLUGS.MAINTENANCE
+  pageSlug: string = PAGE_SLUGS.MAINTENANCE,
+  params?: ListQueryParams
 ): Promise<MaintenanceItem[]> {
   try {
     const response = await api.get<ApiResponse<ItemsResponseData>>(
@@ -58,6 +59,7 @@ export async function getMaintenanceItems(
           act: 1, // Chỉ lấy các item đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

@@ -13,7 +13,7 @@ const { trust } = Astro.props
   class="py-10 min-h-96 bg-black/50 bg-cover bg-no-repeat bg-center flex items-center bg-blend-overlay"
   style={`background-image: url('${trust.background || servicesBannerImg.src}');`}
 >
-  <div class="container text-white text-center">
+  <div class="container text-white text-center" data-aos="fade-up">
     <h2 class="text-[1.75rem] lg:text-[2.5rem] font-bold mb-8 uppercase">
       {trust.title}
     </h2>

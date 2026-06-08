@@ -1,6 +1,6 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
-import type { ApiResponse, ModuleData } from "@/types/api"
+import type { ApiResponse, ModuleData, ListQueryParams } from "@/types/api"
 import type {
   Banner,
   Testimonial,
@@ -13,7 +13,7 @@ import type {
 /**
  * Lấy danh sách banner trang chủ đang hoạt động từ API
  */
-export async function getBanners(): Promise<Banner[]> {
+export async function getBanners(params?: ListQueryParams): Promise<Banner[]> {
   try {
     const response = await api.get<ApiResponse<ModuleData<Banner>>>(
       API_ROUTES.DISPLAY.BANNERS,
@@ -22,6 +22,7 @@ export async function getBanners(): Promise<Banner[]> {
           act: 1, // Chỉ lấy các banner đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )
@@ -35,7 +36,9 @@ export async function getBanners(): Promise<Banner[]> {
 /**
  * Lấy danh sách cảm nhận khách hàng đang hoạt động từ API
  */
-export async function getTestimonials(): Promise<Testimonial[]> {
+export async function getTestimonials(
+  params?: ListQueryParams
+): Promise<Testimonial[]> {
   try {
     const response = await api.get<ApiResponse<ModuleData<Testimonial>>>(
       API_ROUTES.DISPLAY.TESTIMONIALS,
@@ -44,6 +47,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
           act: 1, // Chỉ lấy cảm nhận đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )
@@ -57,7 +61,9 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 /**
  * Lấy danh sách điểm nhấn khách hàng đang hoạt động từ API
  */
-export async function getHighlights(): Promise<Highlight[]> {
+export async function getHighlights(
+  params?: ListQueryParams
+): Promise<Highlight[]> {
   try {
     const response = await api.get<ApiResponse<ModuleData<Highlight>>>(
       API_ROUTES.DISPLAY.HIGHLIGHTS,
@@ -66,6 +72,7 @@ export async function getHighlights(): Promise<Highlight[]> {
           act: 1, // Chỉ lấy các điểm nhấn đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )
@@ -79,7 +86,9 @@ export async function getHighlights(): Promise<Highlight[]> {
 /**
  * Lấy danh sách lý do chọn chúng tôi từ API
  */
-export async function getWhyChooseUsItems(): Promise<WhyChooseUsItem[]> {
+export async function getWhyChooseUsItems(
+  params?: ListQueryParams
+): Promise<WhyChooseUsItem[]> {
   try {
     const response = await api.get<ApiResponse<ModuleData<WhyChooseUsItem>>>(
       API_ROUTES.DISPLAY.WHY_CHOOSE_US,
@@ -88,6 +97,7 @@ export async function getWhyChooseUsItems(): Promise<WhyChooseUsItem[]> {
           act: 1, // Chỉ lấy các lý do đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )
@@ -101,7 +111,7 @@ export async function getWhyChooseUsItems(): Promise<WhyChooseUsItem[]> {
 /**
  * Lấy danh sách các câu hỏi thường gặp (FAQs) từ API
  */
-export async function getFAQs(): Promise<FAQ[]> {
+export async function getFAQs(params?: ListQueryParams): Promise<FAQ[]> {
   try {
     const response = await api.get<ApiResponse<ModuleData<FAQ>>>(
       API_ROUTES.DISPLAY.FAQS,
@@ -110,6 +120,7 @@ export async function getFAQs(): Promise<FAQ[]> {
           act: 1, // Chỉ lấy câu hỏi đang hoạt động
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

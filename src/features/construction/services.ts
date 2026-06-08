@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
 import { PAGE_SLUGS } from "@/constants/pageSlugs"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { ConstructionPage, ConstructionItem } from "./types"
 
 interface PageResponseData {
@@ -48,7 +48,8 @@ export async function getConstructionPageDetails(
  * Lấy danh sách các bài viết con thuộc trang Thi công phần thô từ API
  */
 export async function getConstructionItems(
-  pageSlug: string = PAGE_SLUGS.CONSTRUCTION
+  pageSlug: string = PAGE_SLUGS.CONSTRUCTION,
+  params?: ListQueryParams
 ): Promise<ConstructionItem[]> {
   try {
     const response = await api.get<ApiResponse<ItemsResponseData>>(
@@ -58,6 +59,7 @@ export async function getConstructionItems(
           act: 1,
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

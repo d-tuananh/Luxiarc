@@ -3,6 +3,7 @@ import "@/styles/css/global.css"
 import Header from "@/components/layout/Header.astro"
 import Footer from "@/components/layout/Footer.astro"
 import FloatingWidgets from "@/components/layout/FloatingWidgets.astro"
+import ScrollToTop from "@/components/layout/ScrollToTop.astro"
 import SEO from "@/components/seo/SEO.astro"
 import { getHomeConfig } from "@/features/home/services"
 
@@ -77,5 +78,21 @@ const siteConfig = homeConfig?.site || null
 
     <!-- Widget nổi tròn cố định góc phải -->
     <FloatingWidgets />
+
+    <!-- Nút cuộn lên đầu trang -->
+    <ScrollToTop />
+
+    <script>
+      import AOS from "aos"
+      import "aos/dist/aos.css"
+
+      document.addEventListener("DOMContentLoaded", () => {
+        AOS.init({
+          duration: 800,
+          once: true,
+          offset: 50,
+        })
+      })
+    </script>
   </body>
 </html>

@@ -17,7 +17,7 @@ const { buttonText = "Gửi thông tin" } = Astro.props
     name="fullname"
     required
     placeholder="Họ và tên *"
-    class="block w-full py-2 border-b border-[#9F9F9F]"
+    class="block w-full py-2 border-b border-[#9F9F9F] outline-none"
   />
 
   <!-- Số điện thoại -->
@@ -27,7 +27,7 @@ const { buttonText = "Gửi thông tin" } = Astro.props
     name="phone"
     required
     placeholder="Số điện thoại *"
-    class="block w-full py-2 border-b border-[#9F9F9F]"
+    class="block w-full py-2 border-b border-[#9F9F9F] outline-none"
   />
 
   <!-- Email -->
@@ -37,14 +37,14 @@ const { buttonText = "Gửi thông tin" } = Astro.props
     name="email"
     required
     placeholder="Email *"
-    class="block w-full py-2 border-b border-[#9F9F9F]"
+    class="block w-full py-2 border-b border-[#9F9F9F] outline-none"
   />
 
   <!-- Dịch vụ -->
   <select
     id="service"
     name="service"
-    class="block w-full py-2 border-b border-[#9F9F9F]"
+    class="block w-full py-2 border-b border-[#9F9F9F] outline-none"
   >
     <option value="" disabled selected>Dịch vụ</option>
     <option value="thiet-ke">Thiết kế nội thất</option>
@@ -58,52 +58,133 @@ const { buttonText = "Gửi thông tin" } = Astro.props
     name="message"
     rows="3"
     placeholder="Nội dung"
-    class="block w-full py-2 border-b border-[#9F9F9F] resize-none"></textarea>
+    class="block w-full py-2 border-b border-[#9F9F9F] resize-none outline-none"
+  ></textarea>
 
   <!-- Nút submit -->
   <button type="submit" class="btn"> {buttonText} </button>
 </form>
 
 <script>
-  // Chạy code script ở client-side để xử lý validate
-  const form = document.getElementById("contact-form") as HTMLFormElement
-  const phoneInput = document.getElementById("phone") as HTMLInputElement
+  import Toastify from "toastify-js"
+  import "toastify-js/src/toastify.css"
+  import { api } from "@/utils/api"
 
-  // Kiểm tra định dạng số điện thoại Việt Nam (10 số, bắt đầu bằng 03, 05, 07, 08, 09...)
-  const validatePhone = () => {
-    if (!phoneInput) return true
-    const phoneValue = phoneInput.value.trim()
-    const vnPhonePattern =
-      /^(0|\+84)(3[2-9]|5[2689]|7[0|6-9]|8[1-9]|9[0-9])[0-9]{7}$/
-
-    if (phoneValue && !vnPhonePattern.test(phoneValue)) {
-      phoneInput.setCustomValidity(
-        "Số điện thoại không hợp lệ (ví dụ: 0989846666)"
-      )
-      return false
-    } else {
-      phoneInput.setCustomValidity("")
-      return true
-    }
+  // Hiển thị thông báo Toastify
+  const showNotify = (code: number, message: string) => {
+    if (!message) return
+    document.querySelectorAll(".toastify").forEach((el) => el.remove())
+    Toastify({
+      text: message,
+      close: false,
+      duration: 3000,
+      gravity: "top",
+      position: "right",
+      style: {
+        background: code === 200 ? "#06d6a0" : "#ef476f",
+        borderRadius: "4px",
+        fontSize: "15px",
+        padding: "12px 20px",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+      },
+    }).showToast()
   }
 
-  // Xóa cảnh báo lỗi cũ ngay khi người dùng bắt đầu sửa thông tin
-  phoneInput?.addEventListener("input", () => {
-    phoneInput.setCustomValidity("")
-  })
+  // Tính toán kích thước padding và content của element
+  const getInnerDimensions = (element: HTMLElement) => {
+    const computedStyle = window.getComputedStyle(element)
+    let width = element.clientWidth
+    let height = element.clientHeight
+    height -=
+      parseFloat(computedStyle.paddingTop) +
+      parseFloat(computedStyle.paddingBottom)
+    width -=
+      parseFloat(computedStyle.paddingLeft) +
+      parseFloat(computedStyle.paddingRight)
+    return { height, width }
+  }
 
-  // Đăng ký sự kiện submit
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault()
+  // Vô hiệu hóa nút và hiển thị spinner loading khớp kích thước
+  const disableButton = (button: HTMLButtonElement) => {
+    const dimensions = getInnerDimensions(button)
+    const loadingSvg = `
+      <span style="display: flex; text-align: center; width: ${dimensions.width}px; height: ${dimensions.height}px; justify-content: center; align-items: center; margin: auto;">
+        <svg xmlns="http://www.w3.org/2000/svg" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="32px" height="32px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+          <circle cx="50" cy="50" fill="none" stroke="currentColor" stroke-width="7" r="44" stroke-dasharray="207.34511513692632 71.1150383zc897544">
+            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.6s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+          </circle>
+        </svg>
+      </span>`
+    button.setAttribute("data-old-html", button.innerHTML)
+    button.innerHTML = loadingSvg
+    button.disabled = true
+    button.style.pointerEvents = "none"
+  }
 
-    const isPhoneValid = validatePhone()
-    if (!isPhoneValid) {
-      phoneInput.reportValidity()
-      return
+  // Khôi phục nút về trạng thái ban đầu
+  const enableButton = (button: HTMLButtonElement) => {
+    const oldHtml = button.getAttribute("data-old-html")
+    if (oldHtml !== null) {
+      button.innerHTML = oldHtml
+      button.removeAttribute("data-old-html")
     }
+    button.disabled = false
+    button.style.pointerEvents = "all"
+  }
 
-    // Giả lập gửi form thành công
-    alert("Gửi thông tin liên hệ thành công!")
-    form.reset()
-  })
+  // Đăng ký sự kiện submit form
+  const form = document.querySelector("#contact-form") as HTMLFormElement
+  if (form) {
+    // Để nguyên để trình duyệt hiển thị bong bóng thông báo lỗi mặc định của HTML5
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault()
+
+      const fullnameInput = form.querySelector("#fullname") as HTMLInputElement
+      const phoneInput = form.querySelector("#phone") as HTMLInputElement
+      const emailInput = form.querySelector("#email") as HTMLInputElement
+      const serviceSelect = form.querySelector("#service") as HTMLSelectElement
+      const messageTextarea = form.querySelector(
+        "#message"
+      ) as HTMLTextAreaElement
+      const submitButton = form.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement
+
+      // Xây dựng payload gửi lên API
+      const payload = {
+        name: fullnameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        email: emailInput.value.trim(),
+        service: serviceSelect.value,
+        content: messageTextarea.value.trim(),
+        source_page: window.location.href,
+      }
+
+      try {
+        if (submitButton) disableButton(submitButton)
+
+        const responseData = await api.post<{ message?: string }>(
+          "contact-submissions",
+          payload
+        )
+
+        // Hiện thông báo thành công qua Toastify
+        showNotify(
+          200,
+          responseData?.message || "Gửi thông tin liên hệ thành công!"
+        )
+        form.reset()
+      } catch (error: any) {
+        console.error("Lỗi gửi form:", error)
+        const errMsg =
+          error instanceof Error
+            ? error.message
+            : "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau."
+        showNotify(100, errMsg)
+      } finally {
+        if (submitButton) enableButton(submitButton)
+      }
+    })
+  }
 </script>

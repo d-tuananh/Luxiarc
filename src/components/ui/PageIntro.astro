@@ -13,12 +13,12 @@ interface Props {
 const { content, image, alt = "" } = Astro.props
 ---
 
-<section class="my-12 container">
+<section class="my-12 container overflow-hidden">
   <div
     class={cn("grid", "grid-cols-1", image ? "md:grid-cols-2" : "", "gap-6")}
   >
     <!-- Left: Text descriptions (HTML from API) -->
-    <div class="col-span-1">
+    <div class="col-span-1" data-aos="fade-right">
       <div
         class="s-content text-main text-justify text-[0.95rem] leading-relaxed"
         set:html={content}
@@ -28,7 +28,7 @@ const { content, image, alt = "" } = Astro.props
     <!-- Right: Image -->
     {
       image && (
-        <div class="col-span-1 img__contain">
+        <div class="col-span-1 img__contain" data-aos="fade-left">
           <CImage src={image} alt={alt} />
         </div>
       )

@@ -10,8 +10,8 @@ const { page } = Astro.props
 ---
 
 <Breadcrumbs items={[{ name: page.name }]} />
-<section class="py-6 container">
-  <div class="bg-[#FAFAFA] p-4 md:p-6 xl:p-8 max-w-225 mx-auto">
+<section class="py-6 container overflow-hidden">
+  <div class="bg-[#FAFAFA] p-4 md:p-6 xl:p-8 max-w-225 mx-auto" data-aos="fade-up">
     <h1 class="title-head mb-5">
       {page.name}
     </h1>

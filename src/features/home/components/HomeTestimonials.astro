@@ -16,18 +16,19 @@ const highlight1 = highlights[0] || { title: "Hài lòng", subtitle: "99%" }
 const highlight2 = highlights[1] || { title: "Tinh tế & nhất quán" }
 ---
 
-<section class="py-16 container">
-  <h2 class="title-head mb-8 text-center">Khách hàng nói gì?</h2>
+<section class="py-16 container overflow-hidden">
+  <h2 class="title-head mb-8 text-center" data-aos="fade-up">Khách hàng nói gì?</h2>
 
   <div class="grid grid-cols-1 lg:grid-cols-3">
     <div
       class="bg-[#EBECEE] p-8 lg:p-10 flex flex-col items-center justify-center min-h-60 lg:min-h-80 lg:order-1"
       style="clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);"
+      data-aos="fade-left"
     >
       <span class="text-primary font-bold text-[1.5rem] uppercase"> {highlight1.title} </span>
       <span class="text-stroke-dark mt-2"> {highlight1.subtitle} </span>
     </div>
-    <div class="col-span-1 lg:col-span-2">
+    <div class="col-span-1 lg:col-span-2" data-aos="fade-right">
       <div class="swiper h-full swiper-testimonials-top overflow-hidden">
         <div class="swiper-wrapper divide-x divide-[#CACACA]">
           {
@@ -51,6 +52,7 @@ const highlight2 = highlights[1] || { title: "Tinh tế & nhất quán" }
     <div
       class="bg-[#FAF5EC] p-8 lg:p-10 flex flex-col items-center justify-center min-h-60 lg:min-h-80"
       style="clip-path: polygon(40px 0, 100% 0, 100% 100%, 0 100%, 0 40px);"
+      data-aos="fade-right"
     >
       <div
         class="text-center uppercase text-[1.5rem] lg:text-[2rem] font-bold text-[#DFC976]"
@@ -59,7 +61,7 @@ const highlight2 = highlights[1] || { title: "Tinh tế & nhất quán" }
       </div>
     </div>
 
-    <div class="col-span-1 lg:col-span-2">
+    <div class="col-span-1 lg:col-span-2" data-aos="fade-left">
       <div class="swiper h-full swiper-testimonials-bottom overflow-hidden">
         <div class="swiper-wrapper divide-x divide-[#CACACA]">
           {

@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
 import { PAGE_SLUGS } from "@/constants/pageSlugs"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { InteriorPage, InteriorItem } from "./types"
 
 interface PageResponseData {
@@ -48,7 +48,8 @@ export async function getInteriorPageDetails(
  * Lấy danh sách các bài viết con thuộc trang Nội thất sau xây từ API
  */
 export async function getInteriorItems(
-  pageSlug: string = PAGE_SLUGS.INTERIOR
+  pageSlug: string = PAGE_SLUGS.INTERIOR,
+  params?: ListQueryParams
 ): Promise<InteriorItem[]> {
   try {
     const response = await api.get<ApiResponse<ItemsResponseData>>(
@@ -58,6 +59,7 @@ export async function getInteriorItems(
           act: 1,
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

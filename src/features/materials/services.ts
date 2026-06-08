@@ -1,7 +1,7 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
 import { PAGE_SLUGS } from "@/constants/pageSlugs"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { MaterialsPage, MaterialsItem } from "./types"
 
 interface PageResponseData {
@@ -48,7 +48,8 @@ export async function getMaterialsPageDetails(
  * Lấy danh sách các bài viết con thuộc trang Vật liệu xây dựng từ API
  */
 export async function getMaterialsItems(
-  pageSlug: string = PAGE_SLUGS.MATERIALS
+  pageSlug: string = PAGE_SLUGS.MATERIALS,
+  params?: ListQueryParams
 ): Promise<MaterialsItem[]> {
   try {
     const response = await api.get<ApiResponse<ItemsResponseData>>(
@@ -58,6 +59,7 @@ export async function getMaterialsItems(
           act: 1,
           sort_by: "ord",
           sort_dir: "asc",
+          ...params,
         },
       }
     )

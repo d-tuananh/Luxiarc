@@ -11,7 +11,7 @@ interface Props {
 const { title, image, href } = Astro.props
 ---
 
-<div>
+<div data-aos="fade-up">
   <CLink href={href} title={title} class="c-img pt-[59%] block mb-3">
     <CImage src={image} alt={title} />
   </CLink>

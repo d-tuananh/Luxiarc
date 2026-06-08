@@ -1,6 +1,6 @@
 import { api } from "@/utils/api"
 import { API_ROUTES } from "@/constants/apiRoutes"
-import type { ApiResponse } from "@/types/api"
+import type { ApiResponse, ListQueryParams } from "@/types/api"
 import type { PageStatic, AboutConfig, ContactConfig } from "./types"
 
 interface ListResponseData {
@@ -18,13 +18,16 @@ interface DetailResponseData {
 /**
  * Lấy danh sách toàn bộ trang tĩnh từ API
  */
-export async function getPageStaticsList(): Promise<PageStatic[]> {
+export async function getPageStaticsList(
+  params?: ListQueryParams
+): Promise<PageStatic[]> {
   try {
     const response = await api.get<ApiResponse<ListResponseData>>(
       API_ROUTES.PAGE_STATICS.LIST,
       {
         params: {
           act: 1, // Chỉ lấy các trang đang hoạt động
+          ...params,
         },
       }
     )
