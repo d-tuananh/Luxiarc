@@ -196,3 +196,105 @@ graph TD
 1. **Title Rules**: Document headers must be generated dynamically from API content. Fallback: `${item.name} | LuxiArc`.
 2. **Metadata**: Descriptions must use `item.short_content` or `item.seo.description` to ensure proper description cards on social shares.
 3. **No placeholders**: Images must use valid URLs returned from the API; mock images should never remain hardcoded in product versions.
+
+---
+
+## 8. Step-by-Step API Integration Workflow
+When adding a new feature or modifying an existing one that requires remote data, developers and AI agents MUST follow this structured 5-step workflow:
+
+### Step 1: Register API Endpoints
+Define and manage all backend endpoints in [apiRoutes.ts](file:///d:/code/Work_tech_5s/astrojs/thi-cong-luxiarc/src/constants/apiRoutes.ts) under the appropriate feature key.
+```typescript
+// Example: src/constants/apiRoutes.ts
+export const API_ROUTES = {
+  NEW_FEATURE: {
+    LIST: "/new-feature/items",
+    DETAIL: (slug: string) => `/new-feature/items/${slug}`,
+  }
+}
+```
+
+### Step 2: Declare TypeScript Types
+Define the structure of the API response in the feature's `types.ts` file. 
+- Use the global wrapper type `ApiResponse<T>` from `@/types/api`.
+- Use optional tags `?` and union types (e.g. `string | null`) to ensure code robustness against empty/missing fields in the database.
+```typescript
+// Example: src/features/new-feature/types.ts
+export interface NewItem {
+  id: number;
+  name: string;
+  slug: string;
+  img: string | null;
+  short_content?: string;
+  content?: string;
+}
+```
+
+### Step 3: Implement the Fetch Service
+Create an asynchronous fetch helper inside the feature's `services.ts` file using the common `api` client.
+- Always wrap requests inside a `try...catch` block.
+- Log errors clearly with `console.error`.
+- Return a fallback value (e.g., `null`, `[]`) in the `catch` block to ensure that a single failing API call does not crash the entire static build.
+```typescript
+// Example: src/features/new-feature/services.ts
+import { api } from "@/utils/api";
+import { API_ROUTES } from "@/constants/apiRoutes";
+import type { ApiResponse } from "@/types/api";
+import type { NewItem } from "./types";
+
+export async function getNewItemDetail(slug: string): Promise<NewItem | null> {
+  try {
+    const response = await api.get<ApiResponse<{ item: NewItem }>>(
+      API_ROUTES.NEW_FEATURE.DETAIL(slug)
+    );
+    return response.data.item || null;
+  } catch (error) {
+    console.error(`Error fetching new item detail for ${slug}:`, error);
+    return null; // Return null fallback instead of throwing
+  }
+}
+```
+
+### Step 4: Retrieve Data in Page Frontmatter
+Call the service inside the server-side frontmatter block (`---`) of the page in `src/pages/`.
+- If a detail query returns `null`, redirect to `/404` or show a fallback layout immediately.
+- Pre-calculate SEO titles and descriptions.
+```astro
+---
+// Example: src/pages/new-feature/[slug].astro
+import Layout from "@/layouts/Layout.astro";
+import { getNewItemDetail } from "@/features/new-feature/services";
+
+const { slug } = Astro.params;
+const details = await getNewItemDetail(slug);
+
+if (!details) {
+  return Astro.redirect("/404");
+}
+
+const seoTitle = details.name + " | LuxiArc";
+const seoDesc = details.short_content || "";
+---
+<Layout title={seoTitle} description={seoDesc}>
+  <NewFeatureComponent data={details} />
+</Layout>
+```
+
+### Step 5: Render Component safely
+Render the data in the component using safe optional chaining and conditional block wrappers:
+```astro
+---
+// Example: src/features/new-feature/components/NewFeatureComponent.astro
+import type { NewItem } from "../types";
+interface Props {
+  data: NewItem;
+}
+const { data } = Astro.props;
+---
+<div class="card">
+  <h2>{data.name}</h2>
+  {data.img && <img src={data.img} alt={data.name} />}
+  <p set:html={data.content || ""} />
+</div>
+```
+
