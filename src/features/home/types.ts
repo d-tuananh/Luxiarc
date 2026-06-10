@@ -102,3 +102,28 @@ export interface HomeConfig {
     }
   }
 }
+
+export interface HomeProcessItem {
+  number: string
+  title: string
+  description: string
+  link?: string
+}
+
+export interface HomeProcessData {
+  title: string
+  items: HomeProcessItem[]
+}
+
+export interface HomeSolutionItem {
+  title: string
+  image: string
+  link: string
+}
+
+export interface HomeSolutionData {
+  title: string
+  content: string
+  description?: string
+  items: HomeSolutionItem[]
+}

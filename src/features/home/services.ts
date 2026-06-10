@@ -8,6 +8,8 @@ import type {
   WhyChooseUsItem,
   FAQ,
   HomeConfig,
+  HomeProcessData,
+  HomeSolutionData,
 } from "./types"
 
 /**
@@ -142,6 +144,36 @@ export async function getHomeConfig(): Promise<HomeConfig | null> {
     return response.data
   } catch (error) {
     console.error("Lỗi khi tải home config từ API:", error)
+    return null
+  }
+}
+
+/**
+ * Lấy danh sách quy trình trang chủ từ API
+ */
+export async function getHomeProcess(): Promise<HomeProcessData | null> {
+  try {
+    const response = await api.get<
+      ApiResponse<{ section: string; data: HomeProcessData }>
+    >(API_ROUTES.DISPLAY.HOME_PROCESS)
+    return response.data.data
+  } catch (error) {
+    console.error("Lỗi khi tải quy trình trang chủ từ API:", error)
+    return null
+  }
+}
+
+/**
+ * Lấy danh sách giải pháp trang chủ từ API
+ */
+export async function getHomeSolutions(): Promise<HomeSolutionData | null> {
+  try {
+    const response = await api.get<
+      ApiResponse<{ section: string; data: HomeSolutionData }>
+    >(API_ROUTES.DISPLAY.HOME_SOLUTION)
+    return response.data.data
+  } catch (error) {
+    console.error("Lỗi khi tải giải pháp trang chủ từ API:", error)
     return null
   }
 }

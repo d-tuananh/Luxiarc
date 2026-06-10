@@ -1,7 +1,13 @@
 ---
 // Component Giải pháp xây dựng toàn diện
 import { ChevronLeft, ChevronRight } from "@/components/svgs/config"
-import { CImage } from "@/components/ui"
+import { CImage, CLink } from "@/components/ui"
+import { getHomeSolutions } from "../services"
+
+const solutionData = await getHomeSolutions()
+const title = solutionData?.title || "Giải pháp xây dựng toàn diện"
+const content = solutionData?.content || "Chúng tôi cung cấp chuỗi dịch vụ khép kín, đảm bảo tính thống nhất và chất lượng cao nhất cho mọi công trình."
+const items = solutionData?.items || []
 ---
 
 <section class="container py-16 lg:py-24 overflow-hidden">
@@ -10,17 +16,9 @@ import { CImage } from "@/components/ui"
   >
     <!-- Cột trái: Tiêu đề & Mô tả -->
     <div data-aos="fade-right">
-      <h2 class="title-head mb-4">Giải pháp xây dựng toàn diện</h2>
+      <h2 class="title-head mb-4">{title}</h2>
       <div class="s-content mb-6">
-        <p>
-          Chúng tôi cung cấp chuỗi dịch vụ khép kín, đảm bảo tính thống nhất và
-          chất lượng cao nhất cho mọi công trình.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consa cras cras quis. Tortor ante
-          adipiscing venenatis praesent morbi mattis. Dignissim vivamus
-          ultricies urna.
-        </p>
+        <p>{content}</p>
       </div>
 
       <!-- Điều khiển Swiper Navigation -->
@@ -44,19 +42,19 @@ import { CImage } from "@/components/ui"
     <div class="swiper home-solutions-slider w-full overflow-visible" data-aos="fade-left">
       <div class="swiper-wrapper">
         {
-          Array.from({ length: 5 }).map((_, _index) => (
+          items.map((item) => (
             <div class="swiper-slide">
-              <div class="c-img pt-[111%] before:absolute before:inset-0 before:bg-black/50 before:z-1">
+              <CLink href={item.link} class="c-img pt-[111%] before:absolute before:inset-0 before:bg-black/50 before:z-1 block">
                 <CImage
-                  src={`https://placehold.co/600x800/ccc/a0b0c0?text=LuxiArc+Architecture+Design`}
-                  alt="Thiết Kế Kiến Trúc"
+                  src={item.image}
+                  alt={item.title}
                 />
                 <div class="absolute bottom-0 inset-x-0 p-4 z-2 text-white">
                   <span class="font-semibold text-[1.25rem] line-clamp-2">
-                    — Thiết Kế Kiến Trúc
+                    — {item.title}
                   </span>
                 </div>
-              </div>
+              </CLink>
             </div>
           ))
         }

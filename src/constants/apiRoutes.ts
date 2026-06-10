@@ -8,6 +8,8 @@ export const API_ROUTES = {
     HIGHLIGHTS: "/display/customer-highlights",
     WHY_CHOOSE_US: "/display/why-choose-us-items",
     FAQS: "/display/faqs",
+    HOME_PROCESS: "/display/home-process",
+    HOME_SOLUTION: "/display/home-solution",
   },
   CONFIG: {
     HOME: "/config/home",

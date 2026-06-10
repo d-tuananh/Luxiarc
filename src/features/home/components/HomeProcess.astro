@@ -1,37 +1,10 @@
 ---
 // HomeProcess.astro - Quy trình của chúng tôi
-const steps = [
-  {
-    number: "1",
-    title: "TƯ VẤN & KHẢO SÁT",
-    description: "Tiếp nhận yêu cầu và khảo sát thực địa mặt bằng.",
-  },
-  {
-    number: "2",
-    title: "THIẾT KẾ Ý TƯỞNG",
-    description: "Lên phương án kiến trúc 2D/3D phù hợp với ngân sách.",
-  },
-  {
-    number: "3",
-    title: "HỢP ĐỒNG & CẤP PHÉP",
-    description: "Hoàn thiện hồ sơ pháp lý và ký kết hợp đồng rõ ràng.",
-  },
-  {
-    number: "4",
-    title: "THI CÔNG XÂY DỰNG",
-    description: "Triển khai thi công đúng tiến độ và tiêu chuẩn kỹ thuật.",
-  },
-  {
-    number: "5",
-    title: "GIÁM SÁT CHẤT LƯỢNG",
-    description: "Kiểm soát chặt chẽ từng hạng mục bởi đội ngũ kỹ sư.",
-  },
-  {
-    number: "6",
-    title: "BÀN GIAO & BẢO HÀNH",
-    description: "Nghiệm thu công trình và cam kết bảo trì định kỳ.",
-  },
-]
+import { getHomeProcess } from "../services"
+
+const processData = await getHomeProcess()
+const title = processData?.title || "Quy trình của chúng tôi"
+const steps = processData?.items || []
 ---
 
 <section class="py-16 bg-[#FAFAFA]">
@@ -49,12 +22,12 @@ const steps = [
   </svg>
 
   <div class="container">
-    <h2 class="title-head mb-8 text-center" data-aos="fade-up">Quy trình của chúng tôi</h2>
+    <h2 class="title-head mb-8 text-center" data-aos="fade-up">{title}</h2>
 
     <div class="flex flex-wrap justify-between gap-y-6 -mx-3">
       {
         steps.map((step, index) => (
-          <div 
+          <div
             class="w-full sm:w-1/2 lg:w-1/3 2xl:w-[30%] px-3"
             data-aos="fade-up"
             data-aos-delay={index * 100}
@@ -75,7 +48,7 @@ const steps = [
                   stroke="url(#gold-border)"
                   stroke-width="2"
                 >
-                  {index + 1}
+                  {step.number || index + 1}
                 </text>
               </svg>
               <p class="text-primary text-[1.25rem] font-semibold mb-3 relative z-1">
