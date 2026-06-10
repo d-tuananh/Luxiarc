@@ -1,0 +1,99 @@
+# AI Skill & Coding Guidelines for LuxiArc Project
+
+You are an expert AI software engineer specialized in AstroJS, TypeScript, and TailwindCSS v4. When working on this repository, you MUST follow these guidelines to understand the codebase quickly, maintain structure, write correct code, and optimize builds.
+
+---
+
+## 1. Project Tech Stack & Overview
+- **Framework**: AstroJS (SSG Mode - Static Site Generation by default).
+- **Styling**: TailwindCSS v4.
+- **Client Routing**: SPA-like transitions using `<ClientRouter />` from `astro:transitions`.
+- **Animations**: AOS (Animate On Scroll) for scroll animations, Swiper for carousels/sliders.
+- **Language**: TypeScript (strict type checking enabled).
+- **Backend API URL**: Configured via `PUBLIC_API_BASE_URL` (fetches from Laravel backend).
+
+---
+
+## 2. Directory Structure (Feature-Driven Design)
+The project is structured by features/domains under `src/features/` to maintain independence:
+
+```text
+src/
+├── assets/                 # Shared static assets (images, logos, icons)
+├── layouts/                # Main layout templates
+│   └── Layout.astro        # Base layout with SEO headers, ClientRouter, and AOS init
+├── components/             # Global shared components
+│   └── ui/                 # Atomic UI components (Buttons, Cards, Slider wrappers)
+│   └── layout/             # Layout components (Header.astro, Footer.astro)
+├── features/               # Domain-specific logic and UI (Feature encapsulated)
+│   ├── home/               # Homepage specific components (HomeSolutions, HomeProcess)
+│   ├── page-statics/       # Static page layouts (AboutLayout, ContactLayout)
+│   ├── news/               # News feature modules
+│   └── [feature-name]/     # (e.g. costs, services, interior)
+│       ├── components/     # UI components for this feature
+│       ├── services.ts     # API fetch services for this feature
+│       └── types.ts        # TS types and interfaces for this feature
+├── pages/                  # Routing entry points (keep these files thin!)
+│   ├── index.astro         # Homepage routing
+│   ├── [slug].astro        # Dynamic page resolver
+│   └── api/                # API routes
+└── utils/                  # Global helper modules (api.ts common client)
+```
+
+### Key Naming Conventions:
+- **Astro Components**: `PascalCase` (e.g., `HomeProcess.astro`, `BlogCard.astro`).
+- **Feature Folders**: `kebab-case` or `lowercase` (e.g., `page-statics`, `home`).
+- **TypeScript Files**: `camelCase` (e.g., `api.ts`, `services.ts`).
+- **Path Aliases**: Always use `@/` for `src/` root imports (e.g., `import { api } from "@/utils/api"`). Avoid relative paths.
+
+---
+
+## 3. API Client & Build-Time Request Caching
+To prevent triggering rate limiting (`429 Too Many Attempts`) from the Laravel backend during static rendering of 58+ pages, the API client in `src/utils/api.ts` implements a dual-layer caching and self-healing retry mechanism:
+
+### Dual-Layer Cache:
+1. **In-Memory Cache (`getCache`)**: Caches GET requests in-memory. In development, cache is automatically deleted 2 seconds after resolving to support hot reload (F5). In production, it persists during the build lifecycle.
+2. **Disk Cache (`.api-cache/`)**: Since Astro compiles routes in concurrent worker processes, the in-memory cache is isolated per process. The API client writes resolved responses into `.api-cache/` named by base64url-hashed URLs. Workers read this cache first to avoid sending duplicate calls.
+
+### Self-Healing 429 Retry Handler:
+- If a request returns `429 Too Many Attempts`, the client checks for a `Retry-After` header.
+- It pauses execution for the requested duration (or falls back to exponential backoff with jitter) and retries up to 5 times.
+- Before sending the retry request, it recheck the disk cache (in case another worker thread already fetched and cached it successfully while this thread was waiting).
+
+### Cache Cleanup Hook:
+- The `.api-cache` folder is added to `.gitignore` to prevent committing build caches.
+- A `prebuild` hook (`node ./scripts/clean-cache.js`) runs before `npm run build` to delete `.api-cache` automatically, ensuring Vercel or local builders always fetch the latest CMS content.
+
+### SSR Cache Clear API:
+- An API route exists at `src/pages/api/clear-cache.ts`. If deployed using an SSR or Hybrid adapter in the future, the CMS can clear the cache by calling:
+  `https://luxiarc.vn/api/clear-cache?token=CLEAR_CACHE_TOKEN_HERE`
+
+---
+
+## 4. Animation & Interactivity Guidelines
+- **AOS Animations**:
+  - Initialized in `Layout.astro`.
+  - Use `data-aos="fade-up"`, `data-aos="fade-left"`, `data-aos="fade-right"`.
+  - Stagger grid item animations by index: `data-aos-delay={index * 50}` or `index * 100`.
+  - Do not alter existing AOS attributes unless explicitly requested.
+- **Swiper Sliders**:
+  - Used in components like `HomeSolutions.astro` and `HomeTestimonials.astro`.
+  - Ensure swiper scripts are loaded safely in client-side `<script>` tags, checking if DOM elements exist.
+- **DOM Interactions**:
+  - Keep client `<script>` code safe by checking for element existence (`document.querySelector(...)`) and casting element types (e.g., `as HTMLFormElement`).
+
+---
+
+## 5. SEO Best Practices
+- **Title & Meta**: Layout page must dynamically receive `title` and `description`.
+- **Heading Hierarchy**: Exactly one `<h1>` per page. Sub-sections must follow hierarchical order (`<h2>`, `<h3>` etc.).
+- **Image Component**: Always use `<Image />` from `astro:assets` instead of `<img>`. Ensure it has a meaningful `alt` attribute.
+- **Link Semantics**: Always use standard `<a href="...">` elements for internal navigation, allowing search engine spiders to traverse the site. Do not use JS click handlers to simulate navigation.
+- **Accessibility (A11y)**: Interactive elements like buttons must have clear text or `aria-label` tags.
+
+---
+
+## 6. How to Edit Code Safety
+1. **Preserve Document Integrity**: Keep unrelated comments, structure, and TS declarations intact.
+2. **Avoid Network Requests inside builds**: Let the API client caching layer manage requests. Do not write manual node-fetch overrides.
+3. **Vite Dynamic Node Imports**: Prevent Vite from bundling server-side Node native modules (`node:fs` or `node:path`) into browser-side bundles by importing them dynamically: `await import("node:fs" + "")`.
