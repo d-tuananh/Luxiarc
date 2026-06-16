@@ -13,6 +13,8 @@ const RESOURCE_PREFIX_TO_SLUG: Record<string, string> = {
   interior: PAGE_SLUGS.INTERIOR,
   construction: PAGE_SLUGS.CONSTRUCTION,
   materials: PAGE_SLUGS.MATERIALS,
+  legal: PAGE_SLUGS.LEGAL,
+  technical: PAGE_SLUGS.TECHNICAL,
 }
 
 export const ROUTES = {
@@ -61,6 +63,14 @@ export const ROUTES = {
   MATERIALS: {
     INDEX: `/${PAGE_SLUGS.MATERIALS}`,
     DETAIL: (slug: string) => `/${PAGE_SLUGS.MATERIALS}/${slug}`,
+  },
+  LEGAL: {
+    INDEX: `/${PAGE_SLUGS.LEGAL}`,
+    DETAIL: (slug: string) => `/${PAGE_SLUGS.LEGAL}/${slug}`,
+  },
+  TECHNICAL: {
+    INDEX: `/${PAGE_SLUGS.TECHNICAL}`,
+    DETAIL: (slug: string) => `/${PAGE_SLUGS.TECHNICAL}/${slug}`,
   },
 } as const
 

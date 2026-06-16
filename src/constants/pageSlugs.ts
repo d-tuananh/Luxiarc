@@ -15,6 +15,8 @@ export const PAGE_SLUGS = {
   INTERIOR: "noi-that",
   CONSTRUCTION: "thi-cong",
   MATERIALS: "vat-lieu-xay-dung",
+  LEGAL: "thu-tuc-phap-ly",
+  TECHNICAL: "he-thong-ky-thuat",
 } as const
 
 export type PageSlugType = typeof PAGE_SLUGS

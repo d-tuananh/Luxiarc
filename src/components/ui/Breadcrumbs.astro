@@ -43,6 +43,8 @@ if (items) {
     if (segment === PAGE_SLUGS.COSTS || segment === "costs" || segment === "chi-phi" || segment === "bao-gia") name = "Báo giá"
     if (segment === PAGE_SLUGS.CONTRACTORS || segment === "contractors") name = "Nhà thầu"
     if (segment === PAGE_SLUGS.SERVICES || segment === "services") name = "Dịch vụ"
+    if (segment === PAGE_SLUGS.LEGAL || segment === "legal") name = "Thủ tục pháp lý"
+    if (segment === PAGE_SLUGS.TECHNICAL || segment === "technical") name = "Hệ thống kỹ thuật"
 
     // Nếu là phần tử cuối cùng thì không cần link (chỉ hiển thị text)
     const isLast = index === pathSegments.length - 1

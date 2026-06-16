@@ -31,6 +31,16 @@ export const API_ROUTES = {
     ITEMS: (pageSlug: string) => `/costs/pages/${pageSlug}/items`,
     DETAIL: (pageSlug: string) => `/costs/items/${pageSlug}`,
   },
+  SYSTEMS: {
+    PAGE: (pageSlug: string) => `/systems/pages/${pageSlug}`,
+    ITEMS: (pageSlug: string) => `/systems/pages/${pageSlug}/items`,
+    DETAIL: (itemSlug: string) => `/systems/items/${itemSlug}`,
+  },
+  LEGALS: {
+    PAGE: (pageSlug: string) => `/legals/pages/${pageSlug}`,
+    ITEMS: (pageSlug: string) => `/legals/pages/${pageSlug}/items`,
+    DETAIL: (itemSlug: string) => `/legals/items/${itemSlug}`,
+  },
   SERVICES: {
     PAGE: (pageSlug: string) => `/services/pages/${pageSlug}`,
     ITEMS: (pageSlug: string) => `/services/pages/${pageSlug}/items`,

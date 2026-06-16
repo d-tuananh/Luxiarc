@@ -1,0 +1,36 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { Breadcrumbs, ItemSlider, PageDetailContent } from "@/components/ui"
+import { getTechnicalItems, getTechnicalItemDetail } from "@/features/technical"
+import { ROUTES } from "@/utils/routes"
+import type { GetStaticPaths } from "astro"
+
+export const getStaticPaths = (async () => {
+  const items = await getTechnicalItems()
+  const paths = await Promise.all(
+    items.map(async (item) => {
+      const detail = await getTechnicalItemDetail(item.slug)
+      return {
+        params: { slug: item.slug },
+        props: { item: detail || item, allItems: items },
+      }
+    })
+  )
+  return paths
+}) satisfies GetStaticPaths
+
+const { item, allItems } = Astro.props
+
+const seoTitle = item.seo?.title || `${item.name} | LuxiArc`
+const seoDesc = item.seo?.description || item.short_content || ""
+---
+
+<Layout title={seoTitle} description={seoDesc}>
+  <Breadcrumbs
+    items={[{ name: "Hệ thống kỹ thuật", url: ROUTES.TECHNICAL.INDEX }, { name: item.name }]}
+  />
+
+  <ItemSlider items={allItems} />
+
+  <PageDetailContent title={item.name} content={item.content} />
+</Layout>
