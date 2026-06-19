@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro"
-import fs from "node:fs"
-import path from "node:path"
 
-// API Endpoint để xóa cache (sẽ chạy động nếu cấu hình SSR/Hybrid adapter, hoặc chạy ở build time nếu cấu hình Static)
+// Đảm bảo endpoint này luôn chạy động (server-side), không bị pre-render thành file tĩnh
+export const prerender = false
+
+// API Endpoint để xóa cache (.api-cache)
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url)
@@ -23,10 +24,13 @@ export const GET: APIRoute = async ({ request }) => {
     )
   }
 
-  const cacheDir = path.join(process.cwd(), ".api-cache")
+  try {
+    // Dynamic import để tránh Vite externalize warning (cùng pattern với api.ts)
+    const fs = await import("node:fs" + "")
+    const path = await import("node:path" + "")
+    const cacheDir = path.join(process.cwd(), ".api-cache")
 
-  if (fs.existsSync(cacheDir)) {
-    try {
+    if (fs.existsSync(cacheDir)) {
       fs.rmSync(cacheDir, { recursive: true, force: true })
       return new Response(
         JSON.stringify({
@@ -38,31 +42,31 @@ export const GET: APIRoute = async ({ request }) => {
           headers: { "Content-Type": "application/json" },
         }
       )
-    } catch (err) {
-      const errMsg = err instanceof Error ? err.message : String(err)
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: `Error clearing cache: ${errMsg}`,
-        }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        }
-      )
     }
-  }
 
-  return new Response(
-    JSON.stringify({
-      success: true,
-      message: "No cache folder found. Cache is already empty.",
-    }),
-    {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    }
-  )
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: "No cache folder found. Cache is already empty.",
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+  } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err)
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: `Error clearing cache: ${errMsg}`,
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+  }
 }
 
 // Hỗ trợ cả phương thức POST để dễ dàng tích hợp với các Webhook của CMS

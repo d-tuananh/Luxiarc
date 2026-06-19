@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # api cache
 .api-cache/
+
+# dist
+dist.bak/
